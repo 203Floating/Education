@@ -1,0 +1,95 @@
+$primary: #3952fd;
+$btn_bgc: #fff;
+$bgc: #f0f2f7;
+$ipt-height: 60px;
+$btnColor: #f0f2f7;
+$btnfontColor: #3952fd;
+
+@mixin bgc {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  border-radius: 10px;
+}
+@mixin ipt-user {
+  box-sizing: border-box;
+  outline: none;
+  margin-bottom: 35px;
+  padding-left: 20px;
+  border: 1px solid #ccc;
+  width: 440px;
+  height: $ipt-height;
+  border-radius: 40px;
+}
+@mixin btn-user {
+  border: none;
+  background-color: $primary;
+  color: #f3ffff;
+  font-size: 16px;
+}
+
+@mixin button-Tools($color: $primary, $fontColor: #fff) {
+  width: 80px;
+  height: 30px;
+  border: none;
+  background-color: $color;
+  font-size: 12px;
+  color: $fontColor;
+  border-radius: 5px;
+  margin-left: 20px;
+}
+
+@mixin ipt1 {
+  margin-right: 20px;
+  width: 250px;
+  height: 30px;
+}
+@mixin ipt2 {
+  margin-right: 20px;
+  width: 160px;
+  height: 30px;
+}
+@mixin table {
+  width: 100%;
+  height: 100%;
+  .tools {
+    box-sizing: border-box;
+    width: 100%;
+    height: 160px;
+    padding: 30px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    .row {
+      height: 30px;
+      .ipt {
+        @include ipt2;
+      }
+    }
+    hr {
+      width: 80%;
+      text-align: center;
+      margin-top: 30px;
+      border: 2px solid #eeeeee;
+    }
+    .btn {
+      margin-top: 20px;
+      .btn1 {
+        @include button-Tools();
+      }
+      .btn2 {
+        @include button-Tools($btnColor, $btnfontColor);
+      }
+    }
+  }
+  .main {
+    box-sizing: border-box;
+    width: 100%;
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    .table {
+      border-radius: 10px;
+    }
+  }
+}
