@@ -70,11 +70,13 @@
   </div>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import linkAge from '@/components/linkage/LinkAge.vue'
-import { usePostData } from '@/utils/asyncAxios'
 
+const usePostData = inject('$usePostData')
+const err = inject('$err')
+const success = inject('$success')
 const router = useRouter()
 const route = useRoute()
 const types = ref([
@@ -103,10 +105,15 @@ const toEdit = async () => {
   try {
     schoolData.value.school_address =
       address.value.province + address.value.city + address.value.county + address.value.detail
-    await usePostData('http://localhost:3000/schools/edit', schoolData.value)
-    router.push({
-      name: 'School'
-    })
+    const res = await usePostData('http://localhost:3000/schools/edit', schoolData.value)
+    if (res.data.status === false) {
+      err('编辑失败')
+    } else {
+      router.push({
+        name: 'School'
+      })
+      success('编辑成功')
+    }
   } catch (error) {
     console.log(error)
   }
@@ -114,11 +121,8 @@ const toEdit = async () => {
 </script>
 <style module lang="scss">
 .container {
-  box-sizing: border-box;
-  @include bgc;
-  padding-top: 20px;
+  @include bg_style;
   .row {
-    box-sizing: border-box;
     margin: 20px;
     .title {
       text-align: right;
@@ -132,6 +136,7 @@ const toEdit = async () => {
   }
   .btn {
     margin-top: 100px;
+    margin-bottom:50px;
     .btn1 {
       @include button-Tools($btnColor, $btnfontColor);
     }

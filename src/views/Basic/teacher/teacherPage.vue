@@ -35,14 +35,14 @@
         <el-table-column prop="sub_name" label="科目" />
         <el-table-column prop="g_name" label="年级" />
         <el-table-column prop="t_IDtype" label="证件类型" width="100" />
-        <el-table-column prop="t_IDnumber" label="证件号码" width="200" />
-        <el-table-column prop="t_phone" label="联系方式" width="200" />
-        <el-table-column prop="t_email" label="邮箱" />
-        <el-table-column prop="t_date" label="创建时间" />
+        <el-table-column prop="t_IDnumber" label="证件号码" width="180" />
+        <el-table-column prop="t_phone" label="联系方式" width="180" />
+        <el-table-column prop="t_email" label="邮箱"  />
+        <el-table-column prop="t_date" label="创建时间" width="180"/>
         <el-table-column prop="t_status" label="状态" />
         <el-table-column label="操作" width="200">
           <template #default="scope">
-            <el-button link>编辑</el-button>
+            <el-button link @click="toEdit(scope.row.t_id,scope.row.t_name,scope.row.t_IDnumber)">编辑</el-button>
             <el-button link @click="toDelete(scope.row.t_id)">删除</el-button>
           </template>
         </el-table-column>
@@ -53,7 +53,9 @@
 <script setup>
 import { ref, onMounted, inject } from 'vue'
 import { useCommondata } from '@/stores/common'
+import { useRouter} from 'vue-router'
 const { fetchGrades, fetchCourses } = useCommondata()
+const router = useRouter()
 const teachers = ref()
 const searchipt = ref({})
 //用于保存年级和班级数据来渲染表格
@@ -109,7 +111,7 @@ const toSearch = () => {
       undefined
   }
   render(obj)
-  success('删除成功')
+  success('查询成功')
 }
 //清空
 const toReset = () => {
@@ -132,6 +134,20 @@ const toDelete = async (id) => {
     err('删除失败')
   }
 }
+// 编辑
+const toEdit = (id, name, idnumber) => {
+  router.push({
+    name: 'TeacherEdit',
+    params: {
+      id: id,
+      name: name,
+      IDnumber: idnumber
+    }
+  });
+};
+
+
+
 </script>
 <style module lang="scss">
 .container {

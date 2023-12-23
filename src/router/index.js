@@ -50,6 +50,14 @@ const router = createRouter({
           }
         },
         {
+          path: 'basic/teacher/edit/:id/:name/:IDnumber',
+          name: 'TeacherEdit',
+          component: () => import('../views/Basic/teacher/teacherEdit.vue'),
+          meta: {
+            isAuthorization: false
+          }
+        },
+        {
           path: 'basic/student',
           name: 'Student',
           component: () => import('../views/Basic/student/studentPage.vue'),
@@ -58,9 +66,25 @@ const router = createRouter({
           }
         },
         {
+          path: 'basic/student/edit',
+          name: 'StudentEdit',
+          component: () => import('../views/Basic/student/studentEdit.vue'),
+          meta: {
+            isAuthorization: false
+          }
+        },
+        {
           path: 'basic/class',
           name: 'Class',
           component: () => import('../views/Basic/class/classPage.vue'),
+          meta: {
+            isAuthorization: false
+          }
+        },
+        {
+          path: 'basic/class/Edit',
+          name: 'ClassEdit',
+          component: () => import('../views/Basic/class/classEdit.vue'),
           meta: {
             isAuthorization: false
           }

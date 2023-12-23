@@ -2,16 +2,14 @@
   <div>
     <el-select
       v-model="address.province"
-      placeholder="Select"
-      @change="toLog(address.province)"
+      placeholder="省"
       :class="$style.ipt"
     >
       <el-option v-for="item in provinces" :key="item.id" :label="item.name" :value="item.id" />
     </el-select>
     <el-select
       v-model="address.city"
-      placeholder="Select"
-      @change="toLog(address.city)"
+      placeholder="市"
       :class="$style.ipt"
     >
       <el-option
@@ -23,8 +21,7 @@
     </el-select>
     <el-select
       v-model="address.county"
-      placeholder="Select"
-      @change="toLog(address.county)"
+      placeholder="区/县"
       :class="$style.ipt"
     >
       <el-option
@@ -50,10 +47,6 @@ watch(
     emit('update:address', { ...newValue })
   }
 )
-console.log(address, 'address')
-const toLog = (value) => {
-  console.log(value)
-}
 const provinces = [
   {
     id: 1,
