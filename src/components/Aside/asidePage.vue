@@ -6,7 +6,7 @@
         background-color="#282E38"
         class="el-menu-vertical-demo"
         router="true"
-        default-active="1-2"
+        default-active="1-1"
         text-color="#fff"
         @open="handleOpen"
         @close="handleClose"
@@ -26,13 +26,24 @@
           <el-menu-item index="1-2" route="/basic/teacher">教师管理</el-menu-item>
           <el-menu-item index="1-3" route="/basic/student">学生管理</el-menu-item>
           <el-menu-item index="1-4" route="/basic/class">班级管理</el-menu-item>
+          <el-menu-item index="1-5" route="/basic/grade">年级管理</el-menu-item>
+        </el-sub-menu>
+
+        <el-sub-menu index="2">
+          <template #title>
+            <el-icon><Reading /></el-icon>
+            <span>课程</span>
+          </template>
+          <el-menu-item index="2-1" route="/basic/school">基本课程</el-menu-item>
+          <el-menu-item index="2-2" route="/basic/teacher">兴趣课程</el-menu-item>
+          <el-menu-item index="2-3" route="/basic/student">兴趣选课</el-menu-item>
         </el-sub-menu>
       </el-menu>
     </el-col>
   </el-row>
 </template>
 <script setup>
-import { Menu as IconMenu, Memo } from '@element-plus/icons-vue'
+import { Menu as IconMenu, Memo,Reading  } from '@element-plus/icons-vue'
 const handleOpen = (key, keyPath) => {
   console.log(key, keyPath)
 }

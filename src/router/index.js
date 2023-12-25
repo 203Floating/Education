@@ -11,6 +11,8 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: Home,
+      //初始时直接重定向
+      redirect: '/basic/school',
       meta: {
         isAuthorization: true
       },
@@ -66,7 +68,7 @@ const router = createRouter({
           }
         },
         {
-          path: 'basic/student/edit',
+          path: 'basic/student/edit/:id',
           name: 'StudentEdit',
           component: () => import('../views/Basic/student/studentEdit.vue'),
           meta: {
@@ -82,9 +84,17 @@ const router = createRouter({
           }
         },
         {
-          path: 'basic/class/Edit',
+          path: 'basic/class/Edit/:id',
           name: 'ClassEdit',
           component: () => import('../views/Basic/class/classEdit.vue'),
+          meta: {
+            isAuthorization: false
+          }
+        },
+        {
+          path: 'basic/grade',
+          name: 'Grade',
+          component: () => import('../views/Basic/grade/gradePage.vue'),
           meta: {
             isAuthorization: false
           }

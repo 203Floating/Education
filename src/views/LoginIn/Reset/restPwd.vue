@@ -146,8 +146,7 @@ $pheight: 50px;
         margin: 20px;
       }
     }
-    input,
-    button {
+    input {
       @include ipt-user;
     }
     button {

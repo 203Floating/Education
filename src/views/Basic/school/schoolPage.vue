@@ -27,8 +27,6 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
-console.log(router.currentRoute)
-
 // 定义变量,获取页面数据
 const res = ref('')
 // 获取页面数据

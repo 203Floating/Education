@@ -8,21 +8,16 @@
         <button>密码登陆</button>
         <button>手机号登陆</button>
       </div>
-      <div :class="$style.size_ipt">
+      <div :class="$style.ipt">
         <input placeholder="登陆账号" v-model="verifyFrom.uname" type="text" />
       </div>
-      <div :class="$style.size_ipt">
+      <div :class="$style.ipt">
         <input placeholder="登陆密码" v-model="verifyFrom.upwd" type="password" />
       </div>
-      <div :class="$style.size_ipt">
-        <input
-          placeholder="确认密码"
-          v-model="verifyFrom.upwd2"
-          type="password
-"
-        />
+      <div :class="$style.ipt">
+        <input placeholder="确认密码" v-model="verifyFrom.upwd2" type="password" />
       </div>
-      <div :class="$style.size_ipt">
+      <div :class="$style.btn">
         <button @click="tologin">登陆</button>
       </div>
       <div :class="$style.text">
@@ -47,7 +42,7 @@ const verifyFrom = ref({
   upwd2: ''
 })
 
-function toReset() {
+const toReset=()=> {
   router.push({
     name: 'Reset'
   })
@@ -82,10 +77,7 @@ const tologin = async () => {
   transform: translateX(-50%) translateY(-50%);
   .verify_form {
     height: 100%;
-    button {
-      background-color: $primary;
-      margin-bottom: 30px;
-    }
+
     .login {
       text-align: center;
       margin-bottom: 60px;
@@ -93,16 +85,21 @@ const tologin = async () => {
       font-weight: 700;
     }
     .login_type {
+      margin-bottom: 30px;
       button {
         border: none;
         background-color: $btn_bgc;
         font-size: 16px;
       }
     }
-    .size_ipt {
-      button,
+    .ipt {
       input {
         @include ipt-user;
+      }
+    }
+    .btn {
+      button {
+        @include btn-user;
       }
     }
     .text {
@@ -111,7 +108,7 @@ const tologin = async () => {
       button {
         border: none;
         background-color: #fff;
-        color: #dbc7b7;
+        color: #aaaaaa;
         font-size: 16px;
       }
     }

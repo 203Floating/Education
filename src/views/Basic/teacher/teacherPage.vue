@@ -2,25 +2,22 @@
   <div :class="$style.container">
     <div :class="$style.tools">
       <el-row :class="$style.row">
+        <el-col :span="2" :class="$style.title">姓名：</el-col>
         <el-col :span="4"
-          >姓名:&nbsp;&nbsp;<el-input type="text" :class="$style.ipt" v-model="searchipt.t_name"
+          ><el-input type="text" :class="$style.ipt" v-model="searchipt.t_name"
         /></el-col>
-        <el-col :span="5"
-          >证件号码:&nbsp;&nbsp;<el-input
-            type="text"
-            :class="$style.ipt"
-            v-model="searchipt.t_IDnumber"
+        <el-col :span="2" :class="$style.title">证件号：</el-col>
+        <el-col :span="4"
+          ><el-input type="text" :class="$style.ipt" v-model="searchipt.t_IDnumber"
         /></el-col>
-        <el-col :span="5"
-          >任职状态:&nbsp;&nbsp;
+        <el-col :span="2" :class="$style.title">任职状态：</el-col>
+        <el-col :span="4">
           <el-select v-model="searchipt.t_status" placeholder="任职状态" :class="$style.ipt">
             <el-option v-for="item in status" :label="item.name" :value="item.id" :key="item.id" />
           </el-select>
         </el-col>
-        <el-col :span="5"
-          >教授课程:&nbsp;&nbsp;
-          <el-input type="text" :class="$style.ipt" v-model="searchipt.sub_name"
-        /></el-col>
+        <el-col :span="2" :class="$style.title">教授课程：</el-col>
+        <el-col :span="4"><courseIpt :subject="subject"></courseIpt></el-col>
       </el-row>
       <hr />
       <div :class="$style.btn">
@@ -29,6 +26,11 @@
       </div>
     </div>
     <div :class="$style.main">
+      <div :class="$style.header">
+        <el-button link @click="toAdd"
+          ><el-icon size="15"><FolderAdd /></el-icon>
+        </el-button>
+      </div>
       <el-table :data="teachers" border :class="$style.table">
         <el-table-column prop="t_name" label="姓名" />
         <el-table-column prop="t_sex" label="性别" />
@@ -37,23 +39,36 @@
         <el-table-column prop="t_IDtype" label="证件类型" width="100" />
         <el-table-column prop="t_IDnumber" label="证件号码" width="180" />
         <el-table-column prop="t_phone" label="联系方式" width="180" />
-        <el-table-column prop="t_email" label="邮箱"  />
-        <el-table-column prop="t_date" label="创建时间" width="180"/>
+        <el-table-column prop="t_email" label="邮箱" />
+        <el-table-column prop="t_date" label="创建时间" width="180" />
         <el-table-column prop="t_status" label="状态" />
         <el-table-column label="操作" width="200">
           <template #default="scope">
-            <el-button link @click="toEdit(scope.row.t_id,scope.row.t_name,scope.row.t_IDnumber)">编辑</el-button>
+            <el-button link @click="toEdit(scope.row.t_id, scope.row.t_name, scope.row.t_IDnumber)"
+              >编辑</el-button
+            >
             <el-button link @click="toDelete(scope.row.t_id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
+      <el-pagination
+        :page-size="10"
+        :pager-count="5"
+        layout="prev, pager, next"
+        :total="page.total"
+        :current-page="page.current"
+        @current-change="handleCurrentChange"
+      />
     </div>
   </div>
 </template>
 <script setup>
 import { ref, onMounted, inject } from 'vue'
 import { useCommondata } from '@/stores/common'
-import { useRouter} from 'vue-router'
+import courseIpt from '@/components/input/courseIpt.vue'
+import { FolderAdd } from '@element-plus/icons-vue'
+import { useRouter } from 'vue-router'
+
 const { fetchGrades, fetchCourses } = useCommondata()
 const router = useRouter()
 const teachers = ref()
@@ -67,6 +82,11 @@ const err = inject('$err')
 const usePostData = inject('$usePostData')
 const useDeleteData = inject('$useDeleteData')
 
+const page = ref({})
+const subject = ref({
+  size: false,
+  current: 1
+})
 // 任职状态
 const status = [
   { id: '0', name: '在职' },
@@ -96,6 +116,9 @@ const render = async (params = []) => {
           'Unknown'
       }
     })
+    if (res.data.length != 0) {
+      page.value.total=res.data[0].total
+    }
   })
 }
 //查询
@@ -104,22 +127,32 @@ const toSearch = () => {
     render()
   }
   const obj = {
-    ...searchipt.value,
-    sub_id:
-      course.value.data1.find((c) => c.mc_name === searchipt.value.sub_name)?.mc_id ||
-      course.value.data2.find((c) => c.ac_name === searchipt.value.sub_name)?.ac_id ||
-      undefined
+    t_name: searchipt.value.t_name,
+    t_IDnumber: searchipt.value.t_IDnumber,
+    t_status: searchipt.value.t_status,
+    sub_id: subject.value.id
   }
   render(obj)
   success('查询成功')
+}
+//分页改变
+const handleCurrentChange = (num) => {
+  page.value.current = num
+  const obj = {
+    offset: num - 1
+  }
+  render(obj)
 }
 //清空
 const toReset = () => {
   searchipt.value = {
     t_name: '',
-    sub_name: '',
     t_status: '',
     t_IDnumber: ''
+  }
+  subject.value = {
+    id: '',
+    size: false
   }
   render()
 }
@@ -143,11 +176,19 @@ const toEdit = (id, name, idnumber) => {
       name: name,
       IDnumber: idnumber
     }
-  });
-};
-
-
-
+  })
+}
+//添加
+const toAdd = () => {
+  router.push({
+    name: 'TeacherEdit',
+    params: {
+      id: -1,
+      name: '-1',
+      IDnumber: '-1'
+    }
+  })
+}
 </script>
 <style module lang="scss">
 .container {

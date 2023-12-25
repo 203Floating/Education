@@ -33,9 +33,24 @@ export const useCommondata = defineStore('commondata', () => {
       return error
     }
   }
+  const fetchTeachers = async (sub_id, g_id) => {
+    try {
+      if (sub_id != -1) {
+        const res = await usePostData('http://localhost:3000/teacher', { sub_id: sub_id })
+        return res.data
+      } else {
+        const res = await usePostData('http://localhost:3000/teacher', { g_id: g_id })
+        return res.data
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return {
     fetchGrades, // Expose the function to fetch grades
     fetchCourses,
-    fetchClass
+    fetchClass,
+    fetchTeachers
   }
 })

@@ -4,76 +4,29 @@
       <div :class="$style.header">基础信息</div>
       <div :class="$style.main">
         <el-row :class="$style.row">
-          <el-col :span="2" :class="$style.title"> 姓名：</el-col
-          ><el-col :span="5"
-            ><el-input type="text" :class="$style.ipt1" v-model="editData.t_name" />
+          <el-col :span="2" :class="$style.title" v-if="isID"> 班级ID：</el-col
+          ><el-col :span="5" v-if="isID"
+            ><el-input type="text" :class="$style.ipt1" v-model="editData.c_id"  />
           </el-col>
-          <el-col :span="2" :class="$style.title"> 性别：</el-col
+
+          <el-col :span="2" :class="$style.title"> 班级名：</el-col
+          ><el-col :span="5"
+            ><el-input type="text" :class="$style.ipt1" v-model="editData.c_name" />
+          </el-col>
+
+          <el-col :span="2" :class="$style.title">年级：</el-col>
+          <el-col :span="5"> <gradesIpt :stue="stue" /></el-col>
+        </el-row>
+
+        <el-row :class="$style.row">
+          <el-col :span="2" :class="$style.title"> 班级类型：</el-col
           ><el-col :span="5">
-            <el-select v-model="editData.t_sex" placeholder="性别" :class="$style.ipt1">
-              <el-option label="男" value="0" key="0" />
-              <el-option label="女" value="1" key="1" />
+            <el-select :class="$style.ipt1" v-model="editData.c_type">
+              <el-option value="0" label="普通班" key="0" />
+              <el-option value="1" label="重点班" key="1" />
+              <el-option value="2" label="火箭班" key="2" />
             </el-select>
           </el-col>
-        </el-row>
-        <el-row :class="$style.row">
-          <el-col :span="2" :class="$style.title"> 工号：</el-col
-          ><el-col :span="5"
-            ><el-input type="text" :class="$style.ipt1" v-model="editData.t_id" />
-          </el-col>
-          <el-col :span="2" :class="$style.title"> 联系方式：</el-col
-          ><el-col :span="5"
-            ><el-input type="text" :class="$style.ipt1" v-model="editData.t_phone"
-          /></el-col>
-          <el-col :span="2" :class="$style.title"> 邮箱：</el-col
-          ><el-col :span="5"
-            ><el-input type="text" :class="$style.ipt1" v-model="editData.t_email"
-          /></el-col>
-        </el-row>
-        <el-row :class="$style.row">
-          <el-col :span="2" :class="$style.title"> 民族：</el-col
-          ><el-col :span="5"
-            ><el-input type="text" :class="$style.ipt1" v-model="editData.t_m"
-          /></el-col>
-          <el-col :span="2" :class="$style.title"> 生日：</el-col
-          ><el-col :span="5">
-            <el-date-picker
-              :class="$style.ipt1"
-              v-model="editData.t_bornDate"
-              type="dates"
-              placeholder="请选择你的生日"
-          /></el-col>
-          <el-col :span="2" :class="$style.title"> 任职状态：</el-col
-          ><el-col :span="5">
-            <el-select :class="$style.ipt1" v-model="editData.t_status" placeholder="任职状态">
-              <el-option value="0" label="在职" key="0" />
-              <el-option value="1" label="离职" key="1" />
-              <el-option value="2" label="请假" key="2" />
-            </el-select>
-          </el-col>
-        </el-row>
-        <el-row :class="$style.row">
-          <el-col :span="2" :class="$style.title">通信地址：</el-col>
-          <linkAge :address="address" />
-          <el-col :span="2" :class="$style.title"> 详细地址：</el-col
-          ><el-col :span="5"
-            ><el-input type="text" :class="$style.ipt1" v-model="detail_address"
-          /></el-col>
-        </el-row>
-        <el-row :class="$style.row">
-          <el-col :span="2" :class="$style.title">证件类型：</el-col>
-          <el-col :span="5">
-            <el-select v-model="editData.t_IDtype" :class="$style.ipt2" placeholder="证件类型">
-              <el-option label="身份证" value="身份证" key="1" />
-              <el-option label="护照" value="护照" key="2" />
-              <el-option label="军官证" value="军官证" key="3" />
-              <el-option label="其它" value="其它" key="4" />
-            </el-select>
-          </el-col>
-          <el-col :span="2" :class="$style.title"> 证件号：</el-col
-          ><el-col :span="5"
-            ><el-input type="text" :class="$style.ipt1" v-model="editData.t_IDnumber"
-          /></el-col>
         </el-row>
       </div>
     </div>
@@ -81,37 +34,53 @@
       <div :class="$style.header">教学信息</div>
       <div :class="$style.main">
         <el-row :class="$style.row">
-          <el-col :span="2" :class="$style.title"> 任职学校：</el-col
-          ><el-col :span="5"><el-input type="text" :class="$style.ipt1" /></el-col>
-        </el-row>
-
-        <el-row :class="$style.row">
-          <el-col :span="2" :class="$style.title"> 课程：</el-col
+          <el-col :span="2" :class="$style.title"> 语文老师：</el-col
           ><el-col :span="5">
-            <el-select :class="$style.ipt1" placeholder="科目" v-model="editData.sub_id">
+            <el-select :class="$style.ipt1" v-model="teachers.chinese">
               <el-option
-                v-for="item in course.data2"
-                :key="item.ac_id"
-                :label="item.ac_name"
-                :value="item.ac_id"
-              ></el-option>
-              <el-option
-                v-for="item in course.data1"
-                :key="item.mc_id"
-                :label="item.mc_name"
-                :value="item.mc_id"
-              ></el-option>
+                v-for="item in chinese"
+                :key="item.t_id"
+                :label="item.t_name"
+                :value="item.t_id"
+              />
             </el-select>
           </el-col>
-
-          <el-col :span="2" :class="$style.title"> 年级：</el-col
+        </el-row>
+        <el-row :class="$style.row">
+          <el-col :span="2" :class="$style.title"> 数学老师：</el-col
           ><el-col :span="5">
-            <el-select :class="$style.ipt1" placeholder="年级" v-model="editData.g_id">
+            <el-select :class="$style.ipt1" v-model="teachers.math">
               <el-option
-                v-for="item in grades"
-                :key="item.g_id"
-                :label="item.g_name"
-                :value="item.g_id"
+                v-for="item in math"
+                :key="item.t_id"
+                :label="item.t_name"
+                :value="item.t_id"
+              />
+            </el-select>
+          </el-col>
+        </el-row>
+        <el-row :class="$style.row">
+          <el-col :span="2" :class="$style.title"> 外语老师：</el-col
+          ><el-col :span="5">
+            <el-select :class="$style.ipt1" v-model="teachers.English">
+              <el-option
+                v-for="item in English"
+                :key="item.t_id"
+                :label="item.t_name"
+                :value="item.t_id"
+              />
+            </el-select>
+          </el-col>
+        </el-row>
+        <el-row :class="$style.row">
+          <el-col :span="2" :class="$style.title"> 班主任：</el-col>
+          <el-col :span="5"
+            ><el-select :class="$style.ipt1" v-model="editData.c_headmaster">
+              <el-option
+                :label="item.name"
+                v-for="item in header"
+                :key="item.id"
+                :value="item.id"
               ></el-option>
             </el-select>
           </el-col>
@@ -128,60 +97,99 @@
 </template>
 
 <script setup>
-import { onMounted, ref, inject } from 'vue'
+import { onMounted, ref, inject, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 //自定义组件
-import linkAge from '@/components/linkage/LinkAge.vue'
+import gradesIpt from '@/components/input/gradeIpt.vue'
 
 import { useCommondata } from '@/stores/common'
-const { fetchGrades, fetchCourses } = useCommondata()
+const { fetchGrades, fetchCourses, fetchTeachers } = useCommondata()
 //导入路由
 const route = useRoute()
 const router = useRouter()
 
+const isID = ref(false)
 const usePostData = inject('$usePostData')
 // 课程和年纪信息
 const course = ref({})
 const grades = ref({})
 
+const teachers = ref({
+  chinese: '',
+  math: '',
+  English: ''
+})
+//获取全部的语文、数学、外语老师’
+const chinese = ref()
+const English = ref()
+const math = ref()
+const header = ref()
+
 //基础信息
 const editData = ref({})
-//详细地址
-const address = ref({
-  province: '',
-  city: '',
-  county: '',
-  detail: ''
-})
 
-const detail_address = ref()
+const stue = ref({
+  g_id: '',
+  c_id: '',
+  size: false
+})
+//监听任课老师的改变，动态渲染班主任列表的选择项
+watch(
+  () => teachers,
+  () => {
+    if (teachers.value.chinese && teachers.value.math && teachers.value.English) {
+      editData.value.c_headmaster = ''
+      header.value = [
+        {
+          id: teachers.value.chinese,
+          name:
+            (chinese.value || []).find((t) => t.t_id === teachers.value.chinese)?.t_name ||
+            'Unknown'
+        },
+        {
+          id: teachers.value.math,
+          name: (math.value || []).find((t) => t.t_id === teachers.value.math)?.t_name || 'Unknown'
+        },
+        {
+          id: teachers.value.English,
+          name:
+            (English.value || []).find((t) => t.t_id === teachers.value.English)?.t_name ||
+            'Unknown'
+        }
+      ]
+    }
+  },
+  { deep: true }
+)
 onMounted(async () => {
   grades.value = await fetchGrades()
   const res = await fetchCourses()
   course.value.data1 = res.data1
   course.value.data2 = res.data2
-  console.log(route.params)
-  if (route.params.id) {
-    await usePostData('http://localhost:3000/teacher', {
-      t_id: route.params.id,
-      t_name: route.params.name,
-      t_IDnumber: route.params.IDnumber
+  chinese.value = await fetchTeachers(1)
+  English.value = await fetchTeachers(2)
+  math.value = await fetchTeachers(3)
+  if (route.params.id!=-1) {
+    await usePostData('http://localhost:3000/class', {
+      c_id: route.params.id
     }).then((res) => {
-      editData.value = res.data[0]
+      editData.value = res.data.data[0]
+      isID.value=false
     })
   } else {
-    editData.value.t_id = route.params.id
+    isID.value = true
   }
 })
 //确认
 const toEdit = async () => {
   try {
-    editData.value.t_address =
-      address.value.province + address.value.city + address.value.county + detail_address.value
-    const res = await usePostData('http://localhost:3000/teacher/edit', editData.value)
+    const str  =  teachers.value.English + ',' + teachers.value.chinese + ',' + teachers.value.math
+    editData.value.t_id =str
+editData.value.g_id=stue.value.g_id
+    const res = await usePostData('http://localhost:3000/class/edit', editData.value)
     if (res.data.status) {
       router.push({
-        name: 'Teacher',
+        name: 'Class',
       })
     }
   } catch (error) {
@@ -191,7 +199,7 @@ const toEdit = async () => {
 //取消
 const toReset = () => {
   router.push({
-    name: 'Teacher'
+    name: 'Class',
   })
 }
 </script>

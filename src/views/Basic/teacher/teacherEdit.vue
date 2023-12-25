@@ -88,20 +88,7 @@
         <el-row :class="$style.row">
           <el-col :span="2" :class="$style.title"> 课程：</el-col
           ><el-col :span="5">
-            <el-select :class="$style.ipt1" placeholder="科目" v-model="editData.sub_id">
-              <el-option
-                v-for="item in course.data2"
-                :key="item.ac_id"
-                :label="item.ac_name"
-                :value="item.ac_id"
-              ></el-option>
-              <el-option
-                v-for="item in course.data1"
-                :key="item.mc_id"
-                :label="item.mc_name"
-                :value="item.mc_id"
-              ></el-option>
-            </el-select>
+            <courseIpt :subject="subject"></courseIpt>
           </el-col>
 
           <el-col :span="2" :class="$style.title"> 年级：</el-col
@@ -132,6 +119,7 @@ import { onMounted, ref, inject } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 //自定义组件
 import linkAge from '@/components/linkage/LinkAge.vue'
+import courseIpt from '@/components/input/courseIpt.vue'
 
 import { useCommondata } from '@/stores/common'
 const { fetchGrades, fetchCourses } = useCommondata()
@@ -153,6 +141,7 @@ const address = ref({
   county: '',
   detail: ''
 })
+const subject = ref({})
 
 const detail_address = ref()
 onMounted(async () => {
@@ -160,8 +149,7 @@ onMounted(async () => {
   const res = await fetchCourses()
   course.value.data1 = res.data1
   course.value.data2 = res.data2
-  console.log(route.params)
-  if (route.params.id) {
+  if (route.params.id!=-1) {
     await usePostData('http://localhost:3000/teacher', {
       t_id: route.params.id,
       t_name: route.params.name,
@@ -169,8 +157,6 @@ onMounted(async () => {
     }).then((res) => {
       editData.value = res.data[0]
     })
-  } else {
-    editData.value.t_id = route.params.id
   }
 })
 //确认
@@ -178,6 +164,7 @@ const toEdit = async () => {
   try {
     editData.value.t_address =
       address.value.province + address.value.city + address.value.county + detail_address.value
+      editData.value.sub_id=subject.value.id
     const res = await usePostData('http://localhost:3000/teacher/edit', editData.value)
     if (res.data.status) {
       router.push({

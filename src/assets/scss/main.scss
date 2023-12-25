@@ -5,7 +5,7 @@ $ipt-height: 60px;
 $btnColor: #f0f2f7;
 $btnfontColor: #3952fd;
 //通用背景样式
-@mixin bg_style{
+@mixin bg_style {
   box-sizing: border-box;
   width: 100%;
   background-color: #fff;
@@ -26,10 +26,9 @@ $btnfontColor: #3952fd;
 }
 //登录的按钮
 @mixin btn-user {
-  border: none;
-  background-color: $primary;
+  @include ipt-user;
   color: #f3ffff;
-  font-size: 16px;
+  background-color: $primary;
 }
 
 @mixin button-Tools($color: $primary, $fontColor: $btnColor) {
@@ -56,13 +55,17 @@ $btnfontColor: #3952fd;
 @mixin table {
   width: 100%;
   height: 100%;
+  .ipt {
+    @include ipt2;
+  }
   .tools {
     @include bg_style;
     height: 160px;
     .row {
-      height: 30px;
-      .ipt {
-        @include ipt2;
+      line-height: 30px;
+      .title {
+        text-align: right;
+        width: 100px;
       }
     }
     hr {
@@ -87,9 +90,15 @@ $btnfontColor: #3952fd;
     .table {
       border-radius: 10px;
     }
+    .header {
+      box-sizing: border-box;
+      float: right;
+      padding-right: 20px;
+      margin-bottom: 10px;
+    }
   }
 }
-@mixin edit{
+@mixin edit {
   @include bg_style;
   .basic {
     margin-bottom: 40px;
@@ -114,13 +123,13 @@ $btnfontColor: #3952fd;
   .ipt2 {
     @include ipt2;
   }
-  .btn{
+  .btn {
     margin-top: 50px;
-    .btn1{
+    .btn1 {
       @include button-Tools();
     }
-    .btn2{
-      @include button-Tools( $btnColor,$primary);
+    .btn2 {
+      @include button-Tools($btnColor, $primary);
     }
   }
 }
