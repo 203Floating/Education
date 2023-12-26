@@ -9,7 +9,6 @@
         <el-col :span="5">
           <classIpt :stue="stue" />
         </el-col>
-
       </el-row>
       <hr />
       <div :class="$style.btn">
@@ -19,8 +18,10 @@
     </div>
     <div :class="$style.main">
       <div :class="$style.header">
-        <el-button link  @click="toAdd"><el-icon size="15"><FolderAdd /></el-icon> </el-button>
-     </div>
+        <el-button link @click="toAdd"
+          ><el-icon size="15"><FolderAdd /></el-icon>
+        </el-button>
+      </div>
       <el-table :data="classes" border :class="$style.table">
         <el-table-column prop="c_name" label="班级名称" />
         <el-table-column prop="g_name" label="年级" />
@@ -50,7 +51,7 @@
 import { ref, onMounted, inject } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCommondata } from '@/stores/common'
-import { FolderAdd} from '@element-plus/icons-vue'
+import { FolderAdd } from '@element-plus/icons-vue'
 import gradesIpt from '@/components/input/gradeIpt.vue'
 import classIpt from '@/components/input/classIpt.vue'
 const { fetchGrades } = useCommondata()
@@ -84,7 +85,7 @@ const render = async (params = {}) => {
     const res = await usePostData('http://localhost:3000/class', params)
     classes.value = res.data.data.map((item) => {
       return {
-        c_id:item.c_id,
+        c_id: item.c_id,
         c_name: item.c_name,
         g_name: grades.value.find((grade) => grade.g_id === item.g_id)?.g_name || 'Unknown',
         c_headmaster_name:
@@ -93,9 +94,8 @@ const render = async (params = {}) => {
       }
     })
     if (res.data.data.length != 0) {
-      page.value.total=res.data.data[0].total
+      page.value.total = res.data.data[0].total
     }
-
   } catch (error) {
     console.error('Error fetching data:', error)
   }

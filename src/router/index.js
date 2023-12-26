@@ -98,6 +98,22 @@ const router = createRouter({
           meta: {
             isAuthorization: false
           }
+        },
+        {
+          path: 'course/interest',
+          name: 'interest',
+          component: () => import('../views/course/interest/coursePage.vue'),
+          meta: {
+            isAuthorization: false
+          }
+        },
+        {
+          path: 'course/interest/edit',
+          name: 'interestedit',
+          component: () => import('../views/course/interest/courseEdit.vue'),
+          meta: {
+            isAuthorization: false
+          }
         }
       ]
     },

@@ -13,21 +13,29 @@
     </div>
 
     <div :class="$style.main">
-      <el-menu>
-        <el-menu-item
-          active-text-color="#3952fd"
-          default-active="1"
-          @click="handleGradeChange"
-          v-for="item in grades"
-          :key="item.g_id"
-          :index="item.g_id"
-          :class="$style.menu_item"
-        >
-          <span>{{ item.g_name }}</span>
-        </el-menu-item>
-      </el-menu>
+      <div :class="$style.aside">
+        <el-menu>
+          <el-menu-item
+            active-text-color="#3952fd"
+            default-active="1"
+            @click="handleGradeChange"
+            v-for="item in grades"
+            :key="item.g_id"
+            :index="item.g_id"
+            :class="$style.menu_item"
+          >
+            <span>{{ item.g_name }}</span>
+          </el-menu-item>
+        </el-menu>
+      </div>
       <div :class="$style.table">
-        <div :class="$style.headtitle">年级主任</div>
+
+        <div :class="$style.head">
+          <div :class="$style.title">年级主任</div>
+
+        </div>
+
+
         <div :class="$style.h_main">
           <div :class="$style.title">
             <div :class="$style.box">名称</div>
@@ -62,9 +70,9 @@
         <el-table-column property="t_phone" label="联系方式" />
         <el-table-column property="t_IDnumber" label="证件号码" />
       </el-table>
-      <div style="margin-top: 20px">
-        <el-button @click="setCurrent()">选择</el-button>
-        <el-button @click="setCurrent()">取消</el-button>
+      <div style="margin-top: 20px" :class="$style.dialog_btn">
+        <button @click="setCurrent()" :class="$style.btn1">选择</button>
+        <button @click="dialogTableVisible = false" :class="$style.btn2">取消</button>
       </div>
     </el-dialog>
   </div>
@@ -138,9 +146,9 @@ const getteachers = async (params) => {
 }
 //查询
 const toSearch = () => {
-  const tid = teachers.value.find(item => item.t_name == tname.value).t_id
-  const gid = grades.value.find(item=>item.g_headmaster==tid).g_id
-  console.log(gid);
+  const tid = teachers.value.find((item) => item.t_name == tname.value).t_id
+  const gid = grades.value.find((item) => item.g_headmaster == tid).g_id
+  console.log(gid)
   changeGrade(gid)
 }
 //编辑
@@ -183,36 +191,6 @@ const handleCurrentChange = (val) => {
 </script>
 <style module lang="scss">
 .container {
-  @include table;
-  .main {
-    height: 75%;
-    display: flex;
-    .menu_item {
-      width: 150px;
-    }
-    .table {
-      height: 80%;
-      width: 85%;
-      margin: 0 auto;
-      .headtitle {
-        margin-bottom: 20px;
-        color: $primary;
-      }
-      .h_main {
-        .title,
-        .content {
-          display: flex;
-          border: 1px solid #eeeeee;
-
-          .box {
-            height: 60px;
-            line-height: 60px;
-            text-align: center;
-            width: 25%;
-          }
-        }
-      }
-    }
-  }
+  @include grade_interest;
 }
 </style>

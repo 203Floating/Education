@@ -30,7 +30,7 @@ $btnfontColor: #3952fd;
   color: #f3ffff;
   background-color: $primary;
 }
-
+//编辑按钮，重置按钮，添加按钮
 @mixin button-Tools($color: $primary, $fontColor: $btnColor) {
   width: 80px;
   height: 30px;
@@ -41,20 +41,24 @@ $btnfontColor: #3952fd;
   border-radius: 5px;
   margin-left: 20px;
 }
-
+//大号输入框
 @mixin ipt1 {
   margin-right: 20px;
   width: 250px;
   height: 30px;
 }
+//小号输入框
 @mixin ipt2 {
   margin-right: 20px;
   width: 160px;
   height: 30px;
 }
+//教师，学生，班级的信息展示页面
 @mixin table {
   width: 100%;
-  height: 100%;
+  // height: 100%;
+  // height: 75vh;
+  // height: 2000px;
   .ipt {
     @include ipt2;
   }
@@ -76,12 +80,12 @@ $btnfontColor: #3952fd;
     }
     .btn {
       margin-top: 20px;
-      .btn1 {
-        @include button-Tools();
-      }
-      .btn2 {
-        @include button-Tools($btnColor, $btnfontColor);
-      }
+      // .btn1 {
+      //   @include button-Tools();
+      // }
+      // .btn2 {
+      //   @include button-Tools($btnColor, $btnfontColor);
+      // }
     }
   }
   .main {
@@ -97,7 +101,14 @@ $btnfontColor: #3952fd;
       margin-bottom: 10px;
     }
   }
+  .btn1 {
+    @include button-Tools();
+  }
+  .btn2 {
+    @include button-Tools($btnColor, $btnfontColor);
+  }
 }
+//教师，学生，班级的编辑页面
 @mixin edit {
   @include bg_style;
   .basic {
@@ -131,5 +142,74 @@ $btnfontColor: #3952fd;
     .btn2 {
       @include button-Tools($btnColor, $primary);
     }
+  }
+}
+// 年级和兴趣课程
+@mixin grade_interest {
+  @include table;
+  .main {
+    display: flex;
+    .aside {
+      position: relative;
+
+      width: 150px;
+      height: 540px;
+      overflow: hidden;
+      border-right: 2px solid #bbb;
+    }
+    .table {
+      height: 80%;
+      width: 85%;
+      margin: 0 auto;
+      .head{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        width: 100%;
+        height: 30px;
+        .title{
+          line-height: 30px;
+          width: 100px;
+          border-left: 2px solid $primary;
+          text-align: center;
+          color: $primary;
+        }
+        .delete{
+          width: 50px;
+          text-align: center;
+          .delete_btn{
+            line-height: 30px;
+            font-size: 20px;
+          }
+        }
+      }
+
+
+      .h_main {
+        .title,
+        .content {
+          display: flex;
+          border: 1px solid #eeeeee;
+          .box {
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+            width: 25%;
+          }
+        }
+      }
+    }
+  }
+  .dialog_btn {
+    width: 100%;
+    margin: 0 auto;
+  }
+  .none {
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    font-size: 20px;
+    text-align: center;
+    border: 1px solid #eeeeee;
   }
 }
