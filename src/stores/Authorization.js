@@ -1,13 +1,22 @@
-import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useAuthorization = defineStore('authorization', () => {
-  const isAuthorization = ref(true)
-  function setAuthorizationTrue() {
-    isAuthorization.value = true
+  const isAuthorization = () => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      return true
+    } else {
+      return false
+    }
   }
+
   function setAuthorizationFalse() {
     isAuthorization.value = true
   }
-  return { isAuthorization, setAuthorizationTrue, setAuthorizationFalse }
+  function setHeader(token) {
+    localStorage.removeItem('token')
+    localStorage.setItem('token', token)
+    isAuthorization.value = true
+  }
+  return { isAuthorization, setAuthorizationFalse, setHeader }
 })

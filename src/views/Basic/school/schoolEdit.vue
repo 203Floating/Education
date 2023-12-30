@@ -121,7 +121,7 @@ const toEdit = async () => {
 </script>
 <style module lang="scss">
 .container {
-  @include bg_style;
+  @include bg_style_edit;
   .row {
     margin: 20px;
     .title {
@@ -138,10 +138,10 @@ const toEdit = async () => {
     margin-top: 100px;
     margin-bottom:50px;
     .btn1 {
-      @include button-Tools($btnColor, $btnfontColor);
+      @include button-Tools($bgc, $primary);
     }
     .btn2 {
-      @include button-Tools($btnfontColor, $btnColor);
+      @include button-Tools($primary, $bgc);
     }
   }
 }

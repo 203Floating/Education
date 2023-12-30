@@ -59,7 +59,7 @@ const toEdit = () => {
   font-size: 14px;
 }
 .container {
-  @include bg_style;
+  @include bg_style_edit;
   .title {
     @include div;
     p {

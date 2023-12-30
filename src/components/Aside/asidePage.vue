@@ -6,7 +6,7 @@
         background-color="#282E38"
         class="el-menu-vertical-demo"
         router="true"
-        default-active="1-1"
+        default-active="2-2"
         text-color="#fff"
         @open="handleOpen"
         @close="handleClose"
@@ -35,7 +35,7 @@
             <span>课程</span>
           </template>
           <el-menu-item index="2-1" route="/course/interest" :class="$style.nav">兴趣课程</el-menu-item>
-          <el-menu-item index="2-2" route="/course/interest/edit"  :class="$style.nav">兴趣选课</el-menu-item>
+          <el-menu-item index="2-2" route="/course"  :class="$style.nav">兴趣选课</el-menu-item>
         </el-sub-menu>
       </el-menu>
     </el-col>

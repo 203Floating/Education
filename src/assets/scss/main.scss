@@ -1,9 +1,9 @@
 $primary: #3952fd;
 $btn_bgc: #fff;
 $bgc: #f0f2f7;
-$ipt-height: 60px;
-$btnColor: #f0f2f7;
-$btnfontColor: #3952fd;
+//选课设置的导航的背景
+$nav_bgc: #ddd;
+
 //通用背景样式
 @mixin bg_style {
   box-sizing: border-box;
@@ -11,7 +11,23 @@ $btnfontColor: #3952fd;
   background-color: #fff;
   border-radius: 10px;
   padding: 30px;
+  margin-bottom: 0;
+}
+//工具栏的背景
+@mixin bg_style_tools {
+  @include bg_style;
+  height: 160px;
   margin-bottom: 20px;
+}
+// 表格部分的背景
+@mixin bg_style_table {
+  height: 620px;
+  @include bg_style;
+}
+//整个大页面的背景
+@mixin bg_style_edit {
+  height: 810px;
+  @include bg_style;
 }
 //登录的用户名和密码输入框
 @mixin ipt-user {
@@ -21,7 +37,7 @@ $btnfontColor: #3952fd;
   padding-left: 20px;
   border: 1px solid #ccc;
   width: 440px;
-  height: $ipt-height;
+  height: 60px;
   border-radius: 40px;
 }
 //登录的按钮
@@ -31,7 +47,7 @@ $btnfontColor: #3952fd;
   background-color: $primary;
 }
 //编辑按钮，重置按钮，添加按钮
-@mixin button-Tools($color: $primary, $fontColor: $btnColor) {
+@mixin button-Tools($color: $primary, $fontColor: $bgc) {
   width: 80px;
   height: 30px;
   border: none;
@@ -39,11 +55,20 @@ $btnfontColor: #3952fd;
   font-size: 12px;
   color: $fontColor;
   border-radius: 5px;
-  margin-left: 20px;
+  margin-left: 30px;
+}
+////编辑按钮，重置按钮，添加按钮（圆角更大）
+@mixin button-Tools-radious($color: $primary, $fontColor: $bgc) {
+  width: 80px;
+  height: 30px;
+  border: none;
+  background-color: $color;
+  font-size: 12px;
+  color: $fontColor;
+  border-radius: 20px;
 }
 //大号输入框
 @mixin ipt1 {
-  margin-right: 20px;
   width: 250px;
   height: 30px;
 }
@@ -55,16 +80,12 @@ $btnfontColor: #3952fd;
 }
 //教师，学生，班级的信息展示页面
 @mixin table {
-  width: 100%;
-  // height: 100%;
-  // height: 75vh;
-  // height: 2000px;
   .ipt {
     @include ipt2;
   }
   .tools {
-    @include bg_style;
-    height: 160px;
+    @include bg_style_tools;
+    // height: 160px;
     .row {
       line-height: 30px;
       .title {
@@ -80,19 +101,14 @@ $btnfontColor: #3952fd;
     }
     .btn {
       margin-top: 20px;
-      // .btn1 {
-      //   @include button-Tools();
-      // }
-      // .btn2 {
-      //   @include button-Tools($btnColor, $btnfontColor);
-      // }
     }
   }
   .main {
-    @include bg_style;
+    @include bg_style_table;
     border-radius: 10px;
     .table {
       border-radius: 10px;
+      margin-bottom: 10px;
     }
     .header {
       box-sizing: border-box;
@@ -105,12 +121,12 @@ $btnfontColor: #3952fd;
     @include button-Tools();
   }
   .btn2 {
-    @include button-Tools($btnColor, $btnfontColor);
+    @include button-Tools($bgc, $primary);
   }
 }
 //教师，学生，班级的编辑页面
 @mixin edit {
-  @include bg_style;
+  @include bg_style_edit;
   .basic {
     margin-bottom: 40px;
   }
@@ -118,7 +134,7 @@ $btnfontColor: #3952fd;
     padding-left: 50px;
     width: 200px;
     line-height: 30px;
-    border-left: 4px solid $btnfontColor;
+    border-left: 4px solid $primary;
   }
   .row {
     line-height: 30px;
@@ -140,7 +156,7 @@ $btnfontColor: #3952fd;
       @include button-Tools();
     }
     .btn2 {
-      @include button-Tools($btnColor, $primary);
+      @include button-Tools($bgc, $primary);
     }
   }
 }
@@ -151,7 +167,6 @@ $btnfontColor: #3952fd;
     display: flex;
     .aside {
       position: relative;
-
       width: 150px;
       height: 540px;
       overflow: hidden;
@@ -161,29 +176,28 @@ $btnfontColor: #3952fd;
       height: 80%;
       width: 85%;
       margin: 0 auto;
-      .head{
+      .head {
         display: flex;
         justify-content: space-between;
         margin-bottom: 20px;
         width: 100%;
         height: 30px;
-        .title{
+        .title {
           line-height: 30px;
           width: 100px;
           border-left: 2px solid $primary;
           text-align: center;
           color: $primary;
         }
-        .delete{
+        .delete {
           width: 50px;
           text-align: center;
-          .delete_btn{
+          .delete_btn {
             line-height: 30px;
             font-size: 20px;
           }
         }
       }
-
 
       .h_main {
         .title,
@@ -211,5 +225,132 @@ $btnfontColor: #3952fd;
     font-size: 20px;
     text-align: center;
     border: 1px solid #eeeeee;
+  }
+}
+//禁选，连选页面
+@mixin course_setting {
+  .container {
+    $height: 48px;
+    width: 100%;
+    padding: 10px;
+    padding-top: 0;
+    .header {
+      margin: 10px;
+      margin-top: 0;
+      color: $primary;
+      .add_btn {
+        color: $primary;
+        font-weight: 600;
+      }
+    }
+    .title {
+      padding-left: 60px;
+      box-sizing: border-box;
+      width: 100%;
+      line-height: $height;
+      background-color: $nav_bgc;
+      border: 1px solid $nav_bgc;
+    }
+    .checkboxgroup {
+      .checkbox {
+        box-sizing: border-box;
+        display: block;
+        border: 1px solid $nav_bgc;
+        padding-left: 20px;
+        width: 100%;
+        height: $height;
+        line-height: $height;
+      }
+    }
+    .btn {
+      margin-top: 100px;
+      margin-left: 10px;
+      button {
+        @include button-Tools-radious();
+      }
+    }
+  }
+}
+@mixin course_setting_dialog1 {
+  .dialog {
+    width: 500px;
+    height: 480px;
+    color: #000;
+    border-radius: 10px;
+    .dialog_main {
+      transform: translateY(-30px);
+      border-top: 1px solid $nav_bgc;
+      border-bottom: 1px solid $nav_bgc;
+      display: flex;
+      width: 100%;
+      height: 350px;
+      .dialog_left {
+        overflow: auto;
+        padding-top: 20px;
+        width: 50%;
+        border-right: 1px solid $nav_bgc;
+      }
+      .dialog_right {
+        overflow: auto;
+        padding-top: 20px;
+        width: 50%;
+      }
+      .radio {
+        width: 50%;
+        margin: 5px;
+        padding-left: 50px;
+        width: 120px;
+      }
+    }
+    .dialog_footer {
+      transform: translateY(-50px);
+
+      display: flex;
+      justify-content: space-around;
+      width: 300px;
+      height: 50px;
+      margin: 0 auto;
+    }
+    .btn1 {
+      @include button-Tools-radious();
+    }
+    .btn2 {
+      @include button-Tools-radious($bgc, $primary);
+    }
+  }
+}
+@mixin course_setting_dialog2{
+  .dialog {
+    width: 400px;
+    height: 380px;
+    color: #000;
+    border-radius: 10px;
+    .dialog_main {
+      transform: translateY(-30px);
+      border-top: 1px solid $nav_bgc;
+      border-bottom: 1px solid $nav_bgc;
+      width: 100%;
+      height: 220px;
+      padding: 20px;
+      overflow: auto;
+      .radio {
+        margin-left: 10px;
+        width: 120px;
+      }
+    }
+    .dialog_footer {
+      transform: translateY(-50px);
+      display: flex;
+      justify-content: space-around;
+      width: 300px;
+      height: 50px;
+      margin: 0 auto;
+    }
+    .btn1 {
+      @include button-Tools-radious();
+    }
+    .btn2 {
+      @include button-Tools-radious($bgc, $primary);
+    }
   }
 }

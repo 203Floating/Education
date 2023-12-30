@@ -29,13 +29,9 @@
         </el-menu>
       </div>
       <div :class="$style.table">
-
         <div :class="$style.head">
           <div :class="$style.title">年级主任</div>
-
         </div>
-
-
         <div :class="$style.h_main">
           <div :class="$style.title">
             <div :class="$style.box">名称</div>
@@ -148,7 +144,6 @@ const getteachers = async (params) => {
 const toSearch = () => {
   const tid = teachers.value.find((item) => item.t_name == tname.value).t_id
   const gid = grades.value.find((item) => item.g_headmaster == tid).g_id
-  console.log(gid)
   changeGrade(gid)
 }
 //编辑

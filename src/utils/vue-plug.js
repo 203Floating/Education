@@ -2,6 +2,7 @@
 
 import { success, err, warning } from './popupUtils'
 import { usePostData, useDeleteData, useGetData, uselogin } from './asyncAxios'
+import { changeCourse, findSub } from './selectCourse'
 import { provide } from 'vue'
 export default {
   install: (app) => {
@@ -13,7 +14,8 @@ export default {
     app.config.globalProperties.$useGetData = useGetData
     app.config.globalProperties.$useDeleteData = useDeleteData
     app.config.globalProperties.$uselogin = uselogin
-
+    app.config.globalProperties.$changeCourse = changeCourse
+    app.config.globalProperties.$findSub = findSub
     // 在组件树的根部提供计数器和增量函数
     app.mixin({
       beforeCreate() {
@@ -24,6 +26,8 @@ export default {
         provide('$useGetData', useGetData)
         provide('$uselogin', uselogin)
         provide('$usePostData', usePostData)
+        provide('$changeCourse', changeCourse)
+        provide('$findSub', findSub)
       }
     })
   }

@@ -1,32 +1,49 @@
 import axios from 'axios'
 
-export const useGetData = (url, params, headers) => {
+export const useGetData = (url, params) => {
+  const token = localStorage.getItem('token')
+  const baseHeaders = {
+    Authorization: token
+  }
+
   return axios.get(url, {
     params: params,
-    headers: headers
+    headers: baseHeaders
   })
 }
 
-export const usePostData = (url, params, headers) => {
+export const usePostData = (url, params) => {
+  const token = localStorage.getItem('token')
+  const baseHeaders = {
+    Authorization: token
+  }
+
   return axios.post(url, params, {
-    headers: headers
+    headers: baseHeaders
   })
 }
 
-export const useDeleteData = (url, params, headers) => {
-  return axios.delete(url, { params: params, headers: headers })
+export const useDeleteData = (url, params) => {
+  const token = localStorage.getItem('token')
+  const baseHeaders = {
+    Authorization: token
+  }
+
+  return axios.delete(url, {
+    params: params,
+    headers: baseHeaders
+  })
 }
 
 export const uselogin = async (username, password) => {
   try {
     const res = await axios.post('http://localhost:3000/users', {
-      // 使用相对路径
       username: username,
       password: password
     })
     return res.data
   } catch (error) {
-    console.error('Error:', error) // 输出错误信息
-    throw error // 抛出错误，以便在调用方捕获
+    console.error('Error:', error)
+    throw error
   }
 }

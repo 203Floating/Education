@@ -12,16 +12,13 @@
           ><el-input type="text" :class="$style.ipt" v-model="searchipt.stu_id"
         /></el-col>
 
-
         <el-col :span="2" :class="$style.title">年级：</el-col>
         <el-col :span="4"> <gradesIpt :stue="stue" /></el-col>
-
 
         <el-col :span="2" :class="$style.title">班级：</el-col>
         <el-col :span="4">
           <classIpt :stue="stue" />
         </el-col>
-
       </el-row>
       <hr />
       <div :class="$style.btn">
@@ -31,8 +28,10 @@
     </div>
     <div :class="$style.main">
       <div :class="$style.header">
-        <el-button link  @click="toAdd"><el-icon size="15"><FolderAdd /></el-icon> </el-button>
-     </div>
+        <el-button link @click="toAdd"
+          ><el-icon size="15"><FolderAdd /></el-icon>
+        </el-button>
+      </div>
       <el-table :data="students" border :class="$style.table">
         <el-table-column prop="stu_name" label="姓名" />
         <el-table-column prop="stu_id" label="学号" />
@@ -61,10 +60,10 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted, inject ,watch} from 'vue'
+import { ref, onMounted, inject } from 'vue'
 import { useCommondata } from '@/stores/common'
 import { useRouter } from 'vue-router'
-import { FolderAdd} from '@element-plus/icons-vue'
+import { FolderAdd } from '@element-plus/icons-vue'
 import gradesIpt from '@/components/input/gradeIpt.vue'
 import classIpt from '@/components/input/classIpt.vue'
 const router = useRouter()
@@ -93,12 +92,6 @@ onMounted(async () => {
   classes.value = await fetchClass()
   await render()
 })
-watch(
-  () => stue.value,
-  () => {
-    console.log(stue.value);
-  },{deep:true}
-)
 //渲染
 const render = async (params = {}) => {
   try {
@@ -113,11 +106,10 @@ const render = async (params = {}) => {
       }
     })
     if (res.data.length != 0) {
-      page.value.total=res.data[0].total
+      page.value.total = res.data[0].total
     } else {
-      page.value.total=0
+      page.value.total = 0
     }
-
   } catch (error) {
     console.log(error)
   }
@@ -137,7 +129,7 @@ const toSearch = () => {
   }
   const obj = {
     c_id: stue.value.c_id,
-    g_id:stue.value.g_id,
+    g_id: stue.value.g_id,
     ...searchipt.value
   }
   render(obj)
@@ -152,7 +144,7 @@ const toReset = () => {
   stue.value = {
     c_id: '',
     g_id: '',
-    size:true
+    size: true
   }
   render()
 }

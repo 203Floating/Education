@@ -1,28 +1,30 @@
 <template>
-  <div :class="$style.container">
-    <div :class="$style.verify_form">
-      <div :class="$style.login">
-        <p>登陆</p>
-      </div>
-      <div :class="$style.login_type">
-        <button>密码登陆</button>
-        <button>手机号登陆</button>
-      </div>
-      <div :class="$style.ipt">
-        <input placeholder="登陆账号" v-model="verifyFrom.uname" type="text" />
-      </div>
-      <div :class="$style.ipt">
-        <input placeholder="登陆密码" v-model="verifyFrom.upwd" type="password" />
-      </div>
-      <div :class="$style.ipt">
-        <input placeholder="确认密码" v-model="verifyFrom.upwd2" type="password" />
-      </div>
-      <div :class="$style.btn">
-        <button @click="tologin">登陆</button>
-      </div>
-      <div :class="$style.text">
-        <button>记住密码</button>
-        <button @click="toReset">忘记密码</button>
+  <div :class="$style.box">
+    <div :class="$style.container">
+      <div :class="$style.verify_form">
+        <div :class="$style.login">
+          <p>登陆</p>
+        </div>
+        <div :class="$style.login_type">
+          <button>密码登陆</button>
+          <button>手机号登陆</button>
+        </div>
+        <div :class="$style.ipt">
+          <input placeholder="登陆账号" v-model="verifyFrom.username" type="text" />
+        </div>
+        <div :class="$style.ipt">
+          <input placeholder="登陆密码" v-model="verifyFrom.password" type="password" />
+        </div>
+        <div :class="$style.ipt">
+          <input placeholder="确认密码" v-model="verifyFrom.password2" type="password" />
+        </div>
+        <div :class="$style.btn">
+          <button @click="tologin">登陆</button>
+        </div>
+        <div :class="$style.text">
+          <button>记住密码</button>
+          <button @click="toReset">忘记密码</button>
+        </div>
       </div>
     </div>
   </div>
@@ -35,36 +37,34 @@ const uselogin = inject('$uselogin')
 const success = inject('$success')
 const warning = inject('$warning')
 const router = useRouter()
-// const { warning, success } = popMessage
 const verifyFrom = ref({
-  uname: '',
-  upwd: '',
-  upwd2: ''
+  username: '',
+  password: '',
+  password2: ''
 })
 
-const toReset=()=> {
+const toReset = () => {
   router.push({
     name: 'Reset'
   })
 }
 //登录
 const tologin = async () => {
-  if (verifyFrom.value.uname == '' || verifyFrom.value.upwd == '' || verifyFrom.value.upwd2 == '') {
+  if (verifyFrom.value.username == '' || verifyFrom.value.password == '' || verifyFrom.value.password2 == '') {
     warning('请填写完整信息')
-  } else if (verifyFrom.value.upwd != verifyFrom.value.upwd2) {
+  } else if (verifyFrom.value.password != verifyFrom.value.password2) {
     warning('两次密码不一致')
   } else {
     try {
-      const res = await uselogin(verifyFrom.value.uname, verifyFrom.value.upwd)
-      const { setAuthorizationTrue } = useAuthorization()
+      const res = await uselogin(verifyFrom.value.username, verifyFrom.value.password)
+      const { setHeader } = useAuthorization()
       if (res.status) {
-        await setAuthorizationTrue()
+        setHeader(res.data)
         router.push({ name: 'home' })
         success('登录成功')
       }
     } catch (err) {
       console.log(err)
-      // 进一步处理错误，比如显示错误提示
     }
   }
 }
@@ -113,5 +113,10 @@ const tologin = async () => {
       }
     }
   }
+}
+.box {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
 }
 </style>

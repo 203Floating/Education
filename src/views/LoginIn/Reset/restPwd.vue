@@ -1,4 +1,5 @@
 <template>
+<div :class="$style.box">
   <div :class="$style.container">
     <div :class="$style.nav">
       <button @click="toLogin">登陆</button>
@@ -46,7 +47,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div></div>
 </template>
 
 <script setup>
@@ -153,5 +154,10 @@ $pheight: 50px;
       @include btn-user;
     }
   }
+}
+.box{
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
 }
 </style>

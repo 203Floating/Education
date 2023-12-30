@@ -13,6 +13,5 @@ import { RouterView } from 'vue-router'
   width: 98vw;
   height: 98vh;
   background-color: $bgc;
-  // background-color: red;
 }
 </style>
