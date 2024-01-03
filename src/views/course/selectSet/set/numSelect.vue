@@ -93,7 +93,7 @@ onMounted(async () => {
   const res = await fetchCourses()
   course.value = res.data2
 })
-const cs_id = route.params.id
+const cs_id = route.params.id ? route.params.id : route.query.id
 //修改选课任务设置
 const saveSet = async () => {
   if (courselist.value.length < setting.value.min) {
@@ -126,7 +126,6 @@ const saveSet = async () => {
         }
       }
     }
-    console.log(courselist.value)
   }
 }
 //添加任务的可选课程列表
@@ -175,7 +174,6 @@ const toSave = () => {
       warning('该课程已经存在该任务中')
     }
   }
-  console.log(courselist.value)
 }
 //判断课程是不是已经存在
 const findCourse = () => {

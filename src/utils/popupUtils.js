@@ -20,8 +20,3 @@ export const err = (title) => {
     type: 'error'
   })
 }
-// export default {
-//   success,
-//   warning,
-//   error
-// }

@@ -67,7 +67,7 @@
 </template>
 <script setup>
 import { CirclePlus, Delete } from '@element-plus/icons-vue'
-import { useRoute,useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { ref, onMounted, inject } from 'vue'
 import { useCommondata } from '@/stores/common'
 import { useGetData, usePostData, useDeleteData } from '@/utils/asyncAxios'
@@ -75,7 +75,7 @@ import { useGetData, usePostData, useDeleteData } from '@/utils/asyncAxios'
 const router = useRouter()
 const route = useRoute()
 //从路由中拿到任务id
-const id = route.params.id
+const id = route.params.id ? route.params.id : route.query.id
 const { fetchCourses } = useCommondata()
 //注入工具函数
 const warning = inject('$warning')
@@ -88,7 +88,7 @@ const course = ref()
 const checkSub = ref()
 const subs = ref([])
 //获取互斥课程数据
-const linkcourse = ref()
+const linkcourse = ref([])
 //弹出框
 const dialogVisible = ref(false)
 //获取所有课程数据
@@ -97,22 +97,30 @@ const sub_id = ref({
   left: '',
   right: ''
 })
+
 onMounted(async () => {
   const res = await fetchCourses()
   course.value = res.data2
   await render()
 })
+//渲染课程列表
 const render = async () => {
   try {
     const res = await useGetData('http://localhost:3000/course/banlink', {
       cs_id: id
     })
-    linkcourse.value = res.data.map((item) => {
+    const data = res.data.map((item) => {
       return {
         c_ids: item.c_ids,
         c_names: changeCourse(item.c_ids, course)
       }
     })
+
+    for (let i = 0; i < data.length; i++) {
+      if (findExits(data[i].c_names)) {
+        linkcourse.value.push(data[i])
+      }
+    }
   } catch (error) {
     console.log(error)
   }
@@ -124,7 +132,6 @@ const toSaveCourse = async () => {
     const deleteRes = await useDeleteData('http://localhost:3000/course/banlink/delete', {
       cs_id: id
     })
-
     if (deleteRes.data.status) {
       const savePromises = checkSub.value.map(async (item) => {
         await usePostData('http://localhost:3000/course/banlink', {
@@ -135,20 +142,23 @@ const toSaveCourse = async () => {
       await Promise.all(savePromises)
       success('保存成功')
       render()
-      // subs.value = []
-      // checkSub.value = []
-      // sub_id.value.left = ''
-      // sub_id.value.right = ''
       router.push({
         name: 'connect',
         params: {
-          id:id
+          id: id
         }
       })
     }
   } catch (error) {
     console.log(error)
   }
+}
+const findExits = (str) => {
+  const arr = str.split(',')
+  if (arr[0] == 'unknown' || arr[1] == 'unknown') {
+    return false
+  }
+  return true
 }
 //弹出框弹出保存
 const toSave = () => {

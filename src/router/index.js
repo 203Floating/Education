@@ -10,9 +10,9 @@ const router = createRouter({
       name: 'home',
       component: Home,
       //初始时直接重定向
-      redirect: '/course',
+      redirect: '/basic/index',
       meta: {
-        isAuthorization: true
+        isAuthorization: false
       },
       children: [
         {
@@ -20,7 +20,8 @@ const router = createRouter({
           name: 'Index',
           component: () => import('../views/Basic/index/indexPage.vue'),
           meta: {
-            isAuthorization: true
+            isAuthorization: true,
+            authorzation: '2'
           }
         },
         {
@@ -29,7 +30,8 @@ const router = createRouter({
           component: () => import('../views/Basic/school/schoolPage.vue'),
           meta: {
             breadcrumb: '学校信息',
-            isAuthorization: true
+            isAuthorization: true,
+            authorzation: '2'
           }
         },
         {
@@ -38,7 +40,8 @@ const router = createRouter({
           component: () => import('../views/Basic/school/schoolEdit.vue'),
           meta: {
             breadcrumb: '学校信息编辑',
-            isAuthorization: true
+            isAuthorization: true,
+            authorzation: '2'
           }
         },
         {
@@ -46,7 +49,8 @@ const router = createRouter({
           name: 'Teacher',
           component: () => import('../views/Basic/teacher/teacherPage.vue'),
           meta: {
-            isAuthorization: true
+            isAuthorization: true,
+            authorzation: '2'
           }
         },
         {
@@ -54,7 +58,8 @@ const router = createRouter({
           name: 'TeacherEdit',
           component: () => import('../views/Basic/teacher/teacherEdit.vue'),
           meta: {
-            isAuthorization: true
+            isAuthorization: true,
+            authorzation: '2'
           }
         },
         {
@@ -62,7 +67,8 @@ const router = createRouter({
           name: 'Student',
           component: () => import('../views/Basic/student/studentPage.vue'),
           meta: {
-            isAuthorization: true
+            isAuthorization: true,
+            authorzation: '2'
           }
         },
         {
@@ -70,7 +76,8 @@ const router = createRouter({
           name: 'StudentEdit',
           component: () => import('../views/Basic/student/studentEdit.vue'),
           meta: {
-            isAuthorization: true
+            isAuthorization: true,
+            authorzation: '2'
           }
         },
         {
@@ -78,7 +85,8 @@ const router = createRouter({
           name: 'Class',
           component: () => import('../views/Basic/class/classPage.vue'),
           meta: {
-            isAuthorization: true
+            isAuthorization: true,
+            authorzation: '2'
           }
         },
         {
@@ -86,7 +94,8 @@ const router = createRouter({
           name: 'ClassEdit',
           component: () => import('../views/Basic/class/classEdit.vue'),
           meta: {
-            isAuthorization: true
+            isAuthorization: true,
+            authorzation: '2'
           }
         },
         {
@@ -94,19 +103,33 @@ const router = createRouter({
           name: 'Grade',
           component: () => import('../views/Basic/grade/gradePage.vue'),
           meta: {
-            isAuthorization: true
+            isAuthorization: true,
+            authorzation: '2'
           }
         },
         {
           path: '/course',
           name: 'course',
-          redirect: '/course/page',
+          // redirect: '/course/page',
           component: () => import('../views/course/courseVue.vue'),
+          meta: {
+            isAuthorization: true,
+            authorzation: '2'
+          },
           children: [
             {
               path: 'interest',
               name: 'interest',
               component: () => import('../views/course/interest/coursePage.vue'),
+              meta: {
+                isAuthorization: true,
+                authorzation: '2'
+              }
+            },
+            {
+              path: 'page',
+              name: 'coursePage',
+              component: () => import('../views/course/selectSet/coursePage.vue'),
               meta: {
                 isAuthorization: false
               }
@@ -116,13 +139,16 @@ const router = createRouter({
               name: 'selectPage',
               redirect: '/course/select/add',
               component: () => import('../views/course/selectSet/selectPage.vue'),
+              meta: {
+                isAuthorization: true
+              },
               children: [
                 {
                   path: 'add',
                   name: 'selectAdd',
                   component: () => import('../views/course/selectSet/selectAdd.vue'),
                   meta: {
-                    isAuthorization: false
+                    isAuthorization: true
                   }
                 },
                 {
@@ -130,16 +156,16 @@ const router = createRouter({
                   name: 'selectStudent',
                   component: () => import('../views/course/selectSet/selectStudent.vue'),
                   meta: {
-                    isAuthorization: false
+                    isAuthorization: true
                   }
                 },
                 {
-                  path: 'set',
+                  path: 'set/:id',
                   name: 'selectSet',
-                  redirect: '/course/select/set/number',
+                  // redirect: '/course/select/set/number',
                   component: () => import('../views/course/selectSet/selectSet.vue'),
                   meta: {
-                    isAuthorization: false
+                    isAuthorization: true
                   },
                   children: [
                     {
@@ -167,14 +193,60 @@ const router = createRouter({
               ]
             },
             {
-              path: 'page',
-              name: 'coursePage',
-              component: () => import('../views/course/selectSet/coursePage.vue'),
-              meta: {
-                isAuthorization: false
-              }
+              path: 'DetailSelect',
+              name: 'DetailSelect',
+              redirect: '/course/detailSelect/DetailContent',
+              component: () => import('../views/course/detail/detailPage.vue'),
+              children: [
+                {
+                  path: 'DetailContent',
+                  name: 'DetailContent',
+                  component: () => import('../views/course/detail/detailContent.vue')
+                },
+                {
+                  path: 'DetailData',
+                  name: 'DetailData',
+                  component: () => import('../views/course/detail/detailData.vue')
+                }
+              ]
             }
           ]
+        },
+        {
+          path: 'teacherManage',
+          name: 'teacherManage',
+          component: () => import('../views/TeacherAuthority/classManage.vue'),
+          meta: {
+            isAuthorization: true,
+            authorzation: '1'
+          }
+        },
+        {
+          path: 'selectCourse',
+          name: 'selectCourse',
+          component: () => import('../views/StudentAuthority/selectCourse.vue'),
+          meta: {
+            isAuthorization: true,
+            authorzation: '0'
+          }
+        },
+        {
+          path: 'timeTable',
+          name: 'timeTable',
+          component: () => import('../views/StudentAuthority/timeTable.vue'),
+          meta: {
+            isAuthorization: true,
+            authorzation: '0'
+          }
+        },
+        {
+          path: 'studentEdit',
+          name: 'studentEdit',
+          component: () => import('../views/StudentAuthority/studentEdit.vue'),
+          meta: {
+            isAuthorization: true,
+            authorzation: '0'
+          }
         }
       ]
     },
@@ -197,10 +269,12 @@ const router = createRouter({
   ]
 })
 router.beforeEach((to, from, next) => {
-  const { isAuthorization } = useAuthorization()
-
+  const { isAuthorization, getAuthority } = useAuthorization()
+  const { level } = getAuthority()
   try {
-    if (!to.meta.isAuthorization || isAuthorization()) {
+    if (!to.meta.isAuthorization) {
+      next()
+    } else if ((isAuthorization() && to.meta.authorzation, level == to.meta.authorzation)) {
       next()
     } else {
       next({ name: 'LoginIn' })
@@ -210,7 +284,5 @@ router.beforeEach((to, from, next) => {
     next({ name: 'LoginIn' })
   }
 })
-
-
 
 export default router

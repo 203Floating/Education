@@ -50,18 +50,28 @@ const toReset = () => {
 }
 //登录
 const tologin = async () => {
-  if (verifyFrom.value.username == '' || verifyFrom.value.password == '' || verifyFrom.value.password2 == '') {
+  if (
+    verifyFrom.value.username == '' ||
+    verifyFrom.value.password == '' ||
+    verifyFrom.value.password2 == ''
+  ) {
     warning('请填写完整信息')
   } else if (verifyFrom.value.password != verifyFrom.value.password2) {
     warning('两次密码不一致')
   } else {
     try {
       const res = await uselogin(verifyFrom.value.username, verifyFrom.value.password)
-      const { setHeader } = useAuthorization()
+      const { setHeader, setAuthority } = useAuthorization()
       if (res.status) {
-        setHeader(res.data)
-        router.push({ name: 'home' })
+        const tag = res.data.data[0]
+        setHeader(res.data.token)
+        setAuthority(tag)
         success('登录成功')
+        if (tag.level == '2') {
+          router.push({ name: 'home' })
+        } else if (tag.level == '0') {
+          router.push({ name: 'timeTable' })
+        }
       }
     } catch (err) {
       console.log(err)

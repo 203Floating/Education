@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const useGetData = (url, params) => {
-  const token = localStorage.getItem('token')
+  const token = sessionStorage.getItem('token')
   const baseHeaders = {
     Authorization: token
   }
@@ -13,7 +13,7 @@ export const useGetData = (url, params) => {
 }
 
 export const usePostData = (url, params) => {
-  const token = localStorage.getItem('token')
+  const token = sessionStorage.getItem('token')
   const baseHeaders = {
     Authorization: token
   }
@@ -24,7 +24,7 @@ export const usePostData = (url, params) => {
 }
 
 export const useDeleteData = (url, params) => {
-  const token = localStorage.getItem('token')
+  const token = sessionStorage.getItem('token')
   const baseHeaders = {
     Authorization: token
   }

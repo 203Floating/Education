@@ -52,9 +52,9 @@ import { CirclePlus, Delete } from '@element-plus/icons-vue'
 import { ref, onMounted, inject } from 'vue'
 import { useCommondata } from '@/stores/common'
 import { useGetData, usePostData, useDeleteData } from '@/utils/asyncAxios'
-import { useRoute} from 'vue-router'
+import { useRoute } from 'vue-router'
 const route = useRoute()
-const id =route.params.id
+const id = route.params.id ? route.params.id : route.query.id
 const { fetchCourses } = useCommondata()
 //注入工具函数
 const warning = inject('$warning')
@@ -64,7 +64,7 @@ const course = ref()
 //选择的课程
 const subs = ref([])
 //获取禁选课程数据
-const linkcourse = ref()
+const linkcourse = ref([])
 //弹出框
 const dialogVisible = ref(false)
 //获取所有课程数据
@@ -79,14 +79,19 @@ onMounted(async () => {
 const render = async () => {
   try {
     const res = await useGetData('http://localhost:3000/course/ban', {
-      cs_id:id
+      cs_id: id
     })
-    linkcourse.value = res.data.map((item) => {
+    const data = res.data.map((item) => {
       return {
         c_id: item.c_id,
         c_names: changeCourse(item.c_id, course)
       }
     })
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].c_names != 'unknown') {
+        linkcourse.value.push(data[i])
+      }
+    }
   } catch (error) {
     console.log(error)
   }

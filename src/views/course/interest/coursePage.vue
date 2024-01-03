@@ -10,15 +10,19 @@
         <el-col :span="4"
           ><el-input type="text" :class="$style.ipt" v-model="course.ac_name"
         /></el-col>
-        <el-col :span="2" :class="$style.title">任职状态：</el-col>
+        <el-col :span="2" :class="$style.title">开设年级：</el-col>
         <el-col :span="4">
           <gradesIpt :stue="stue" />
         </el-col>
-        <el-col :span="2" :class="$style.title">状态：</el-col>
+        <el-col :span="2" :class="$style.title">开课时间：</el-col>
         <el-col :span="4">
-          <el-select v-model="course.ac_status" :class="$style.ipt" placeholder="状态">
-            <el-option label="可选" value="0" key="0" />
-            <el-option label="禁选" value="1" key="1" /> </el-select
+          <el-select v-model="course.timetable
+          " :class="$style.ipt" placeholder="星期">
+            <el-option label="星期一" value="1" key="1" />
+            <el-option label="星期二" value="2" key="2" />
+            <el-option label="星期三" value="3" key="3" />
+            <el-option label="星期四" value="4" key="4" />
+            <el-option label="星期五" value="5" key="5" /> </el-select
         ></el-col>
       </el-row>
       <hr />
@@ -136,7 +140,7 @@ const getInterest = async (index) => {
     const res = await usePostData('http://localhost:3000/assistclass', [])
     interest.value = res.data.data
     if (index) {
-      current.value =index
+      current.value = index
     } else {
       current.value = interest.value[0].ac_id
     }
@@ -162,13 +166,15 @@ const handleTeachers = async () => {
 const toAdd = async () => {
   course.value.g_id = stue.value.g_id
   course.value.sub_year = 1
+  course.value.ac_status = true
   try {
     const res = await usePostData('http://localhost:3000/assistclass/add', course.value)
     console.log(res)
     if (res.data.status) {
       success('添加成功')
-await  getInterest()
+      await getInterest()
     }
+    toReset()
   } catch (error) {
     console.log(error)
   }
@@ -195,7 +201,7 @@ const toDelete = async () => {
 //重置
 const toReset = () => {
   course.value = {
-    ac_status: '',
+    timetable: '',
     ac_id: '',
     ac_name: ''
   }

@@ -82,7 +82,6 @@ const toSave = async () => {
   editData.value.g_id = stue.value.g_id
   try {
     const res = await usePostData('http://localhost:3000/course/add', editData.value)
-    console.log(res)
     if (res.statusText === "OK") {
       router.push({
         name: 'selectStudent',
@@ -114,7 +113,6 @@ const getClassList = async () => {
   classList.value = res.filter((item) => {
     return item.g_id === stue.value.g_id
   })
-  console.log(classList.value, '班级列表')
 }
 //监听年级改变该年级所属下的班级
 watch(

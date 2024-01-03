@@ -210,8 +210,12 @@ const toSave = () => {
     Promise.all(savePromises)
     if (tag) {
       router.push({
-        name: 'number',
-        id:cs_id
+
+        name: 'selectSet',
+
+        params: {
+          id: task.value.cs_id
+        }
       })
     }
   } else {
