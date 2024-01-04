@@ -25,7 +25,6 @@
                   width="220"
                   confirm-button-text="必须的"
                   cancel-button-text="不,谢谢"
-                  :icon="InfoFilled"
                   icon-color="#626AEF"
                   title="你确认退出登陆?"
                 >

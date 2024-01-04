@@ -67,11 +67,11 @@ const usePostData = inject('$usePostData')
 const timetableDay = inject('$timetableDay')
 //用户所在班级的课程对象
 const timetable = ref([
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0]
+  ['', '', ''],
+  ['', '', ''],
+  ['', '', ''],
+  ['', '', ''],
+  ['', '', '']
 ])
 const interest = ref(['自习', '自习', '自习', '自习', '自习'])
 const { userId } = getAuthority()

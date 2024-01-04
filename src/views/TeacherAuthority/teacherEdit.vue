@@ -80,10 +80,10 @@
     <div :class="$style.extra">
       <div :class="$style.header">教学信息</div>
       <div :class="$style.main">
-        <el-row :class="$style.row">
+        <!-- <el-row :class="$style.row">
           <el-col :span="2" :class="$style.title"> 任职学校：</el-col
           ><el-col :span="5"><el-input type="text" :class="$style.ipt1" /></el-col>
-        </el-row>
+        </el-row> -->
 
         <el-row :class="$style.row">
           <el-col :span="2" :class="$style.title"> 课程：</el-col
@@ -108,7 +108,6 @@
     <div>
       <div :class="$style.btn">
         <button :class="$style.btn1" @click="toEdit">确认</button>
-        <button :class="$style.btn2" @click="toReset">取消</button>
       </div>
     </div>
   </div>
@@ -116,16 +115,18 @@
 
 <script setup>
 import { onMounted, ref, inject } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
 //自定义组件
 import linkAge from '@/components/linkage/LinkAge.vue'
 import courseIpt from '@/components/input/courseIpt.vue'
 
 import { useCommondata } from '@/stores/common'
+import { useAuthorization } from '@/stores/Authorization'
+import { success } from '@/utils/popupUtils'
 const { fetchGrades, fetchCourses } = useCommondata()
+const { getAuthority } = useAuthorization()
+//拿到当前教师用户的id
+const { userId } = getAuthority()
 //导入路由
-const route = useRoute()
-const router = useRouter()
 
 const usePostData = inject('$usePostData')
 // 课程和年纪信息
@@ -149,33 +150,26 @@ onMounted(async () => {
   const res = await fetchCourses()
   course.value.data1 = res.data1
   course.value.data2 = res.data2
-  if (route.params.id!=-1) {
-    await usePostData('http://localhost:3000/teacher', {
-      t_id: route.params.id,
-      t_name: route.params.name,
-      t_IDnumber: route.params.IDnumber
-    }).then((res) => {
-      editData.value = res.data[0]
-    })
-  }
+  await usePostData('http://localhost:3000/teacher', {
+    t_id: userId
+  }).then((res) => {
+    editData.value = res.data[0]
+    subject.value.id = editData.value.sub_id
+  })
 })
 //确认
 const toEdit = async () => {
   try {
     editData.value.t_address =
       address.value.province + address.value.city + address.value.county + detail_address.value
-      editData.value.sub_id=subject.value.id
+    editData.value.sub_id = subject.value.id
     const res = await usePostData('http://localhost:3000/teacher/edit', editData.value)
     if (res.data.status) {
-      router.go(-1)
+      success('修改成功')
     }
   } catch (error) {
     console.log(error)
   }
-}
-//取消
-const toReset = () => {
-  router.go(-1)
 }
 </script>
 <style module lang="scss">

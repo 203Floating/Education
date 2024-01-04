@@ -42,6 +42,7 @@
 import { ref, onMounted, inject } from 'vue'
 import { useCommondata } from '@/stores/common'
 const { fetchGrades, fetchClass, fetchCourses } = useCommondata()
+import { useRoute } from 'vue-router';
 const usePostData = inject('$usePostData')
 const useGetData = inject('$useGetData')
 //保存选课任务的数据
@@ -49,11 +50,15 @@ const taskData = ref({})
 const gradeData = ref([])
 const classData = ref([])
 const courseData = ref([])
-const taskId = '55555'
+const route = useRoute()
+const taskId = route.params.id
+
+
 const mutualCourse = ref('')
 const connectCourse = ref('')
 const banCourse = ref('')
 onMounted(async () => {
+
   gradeData.value = await fetchGrades()
   classData.value = await fetchClass()
   const res = await fetchCourses()

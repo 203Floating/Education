@@ -71,7 +71,7 @@ const changeWeek = inject('$changeWeek')
 //获得全部的年级信息
 const gradeData = ref([])
 //获得当前学生的学号
-const { level, userId } = getAuthority()
+const { userId } = getAuthority()
 //获得学生的详细信息
 const userData = ref({})
 //获得学生可选任务的详细信息
@@ -86,9 +86,9 @@ onMounted(async () => {
   await getStudents()
   await getTask()
   await getCourse()
-  if (taskData.value.cs_status != '1') [(courseData.value = '')]
+  console.log(taskData.value, 'task')
+  // if (taskData.value.cs_status != '1') [(courseData.value = '')]
 })
-console.log(level)
 //选课
 const toSave = async () => {
   const course = courselist.value.map((item) => {
@@ -120,6 +120,26 @@ const toSave = async () => {
     warning('课程冲突!')
   }
 }
+//获得可选课程的信息
+const getCourse = async () => {
+  try {
+    for (const e of taskData.value.sub_ids.split(',')) {
+      const res = await usePostData('http://localhost:3000/assistclass', {
+        ac_id: e
+      })
+      console.log(res, 'res')
+      if (!res.data.data.length) {
+        courseData.value = []
+      } else {
+        if (res.data.data[0].g_id == userData.value.g_id) {
+          await getCourseData(res.data.data[0])
+        }
+      }
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
 //查询指定课程
 const searchCourse = async () => {
   try {
@@ -128,15 +148,19 @@ const searchCourse = async () => {
     })
     if (res.data.data[0].g_id == userData.value.g_id) {
       courseData.value = []
-      courseData.value.push({
-        ...res.data.data[0],
-        g_name: gradeData.value.find((g) => g.g_id === res.data.data[0].g_id).g_name,
-        timetable_name: changeWeek(res.data.data[0].timetable)
-      })
+      await getCourseData(res.data.data[0])
     }
   } catch (error) {
     console.log(error)
   }
+}
+const getCourseData = async (data) => {
+  courseData.value.push({
+    ...data,
+    g_name: gradeData.value.find((g) => g.g_id === data.g_id).g_name,
+    timetable_name: changeWeek(data.timetable),
+    select_status: (await searchSelectCourse(data.ac_id)) ? '未选' : '已选'
+  })
 }
 //查询是否已经选择该课程
 const searchSelectCourse = async (id) => {
@@ -172,30 +196,7 @@ const getTask = async () => {
     console.log(error)
   }
 }
-//获得可选课程的信息
-const getCourse = async () => {
-  try {
-    for (const e of taskData.value.sub_ids.split(',')) {
-      const res = await usePostData('http://localhost:3000/assistclass', {
-        ac_id: e
-      })
-      if (!res.data.data.length) {
-        courseData.value = []
-      } else {
-        if (res.data.data[0].g_id == userData.value.g_id) {
-          courseData.value.push({
-            ...res.data.data[0],
-            g_name: gradeData.value.find((g) => g.g_id === res.data.data[0].g_id).g_name,
-            timetable_name: changeWeek(res.data.data[0].timetable),
-            select_status: (await searchSelectCourse(res.data.data[0].ac_id)) ? '未选' : '已选'
-          })
-        }
-      }
-    }
-  } catch (error) {
-    console.log(error)
-  }
-}
+
 //重置输入框
 const toReset = () => {
   courseId.value = ''

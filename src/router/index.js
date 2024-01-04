@@ -76,8 +76,8 @@ const router = createRouter({
           name: 'StudentEdit',
           component: () => import('../views/Basic/student/studentEdit.vue'),
           meta: {
-            isAuthorization: true,
-            authorzation: '2'
+            isAuthorization: false
+            // authorzation: '2'
           }
         },
         {
@@ -130,6 +130,14 @@ const router = createRouter({
               path: 'page',
               name: 'coursePage',
               component: () => import('../views/course/selectSet/coursePage.vue'),
+              meta: {
+                isAuthorization: false
+              }
+            },
+            {
+              path: 'table',
+              name: 'alltable',
+              component: () => import('../views/course/timetable/timeTable.vue'),
               meta: {
                 isAuthorization: false
               }
@@ -199,12 +207,12 @@ const router = createRouter({
               component: () => import('../views/course/detail/detailPage.vue'),
               children: [
                 {
-                  path: 'DetailContent',
+                  path: 'DetailContent/:id',
                   name: 'DetailContent',
                   component: () => import('../views/course/detail/detailContent.vue')
                 },
                 {
-                  path: 'DetailData',
+                  path: 'DetailData/:id',
                   name: 'DetailData',
                   component: () => import('../views/course/detail/detailData.vue')
                 }
@@ -216,6 +224,24 @@ const router = createRouter({
           path: 'teacherManage',
           name: 'teacherManage',
           component: () => import('../views/TeacherAuthority/classManage.vue'),
+          meta: {
+            isAuthorization: true,
+            authorzation: '1'
+          }
+        },
+        {
+          path: 'teacherEdit',
+          name: 'teacherEdit',
+          component: () => import('../views/TeacherAuthority/teacherEdit.vue'),
+          meta: {
+            isAuthorization: true,
+            authorzation: '1'
+          }
+        },
+        {
+          path: 'studentManage',
+          name: 'studentManage',
+          component: () => import('../views/TeacherAuthority/studentManage.vue'),
           meta: {
             isAuthorization: true,
             authorzation: '1'

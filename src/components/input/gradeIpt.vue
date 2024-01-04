@@ -25,14 +25,14 @@ const emit = defineEmits()
 watch(
   () => stue, // 使用 stu_exra，使用 deep 选项监视对象变化
   (newValue) => {
-    emit('update:stue', {...newValue});
+    emit('update:stue', { ...newValue })
   },
   { deep: true } // 添加 deep 选项
-);
+)
 
 onMounted(async () => {
   grades.value = await fetchGrades()
-});
+})
 </script>
 
 <style lang="scss" module>

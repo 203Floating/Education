@@ -25,25 +25,44 @@
     <div :class="$style.main">
       <div :class="$style.header">
         <el-button link @click="toAdd">
-          <el-icon size="20"><CirclePlus /></el-icon>
+          <el-icon size="20">
+            <CirclePlus />
+          </el-icon>
         </el-button>
       </div>
       <el-table :data="tasklist" border :class="$style.table">
         <el-table-column type="index" label="序号" width="80" />
-        <el-table-column prop="cs_name" label="选课任务名" width="150" />
-        <el-table-column prop="cs_class" label="选课对象" width="200" />
+        <el-table-column label="选课任务名" width="180">
+          <template #default="scope">
+            <el-button link @click="changeId(scope.row.cs_id)">{{ scope.row.cs_name }}</el-button>
+          </template>
+        </el-table-column>
+        <el-table-column label="选课对象" width="200">
+          <template #default="scope">
+            <el-button link @click="changeId(scope.row.cs_id)">{{ scope.row.cs_class }}</el-button>
+          </template>
+        </el-table-column>
         <el-table-column prop="cs_grade" label="选课年级" width="100" />
-        <el-table-column prop="cs_max" label="MAX" />
-        <el-table-column prop="cs_min" label="MIN" />
-        <el-table-column prop="cs_statusName" label="状态"/>
+        <el-table-column prop="cs_max" label="MAX" width="100" />
+        <el-table-column prop="cs_min" label="MIN" width="100" />
+        <el-table-column prop="cs_statusName" label="状态" width="120" />
         <el-table-column prop="cs_Date" label="选课日期" width="120" />
-        <el-table-column label="操作" width="200">
+        <el-table-column label="操作">
           <template #default="scope">
             <el-button link @click="toEdit(scope.row.cs_id)">编辑</el-button>
             <el-button link @click="toDelete(scope.row.cs_id)">删除</el-button>
-            <el-button link @click="toCheckStatus(scope.row.cs_id,'1')" v-if="scope.row.cs_status == 0">发布</el-button>
-            <el-button link @click="toCheckStatus(scope.row.cs_id,'2')"  v-if="scope.row.cs_status == 1">完成任务</el-button>
-
+            <el-button
+              link
+              @click="toCheckStatus(scope.row.cs_id, '1')"
+              v-if="scope.row.cs_status == 0"
+              >发布</el-button
+            >
+            <el-button
+              link
+              @click="toCheckStatus(scope.row.cs_id, '2')"
+              v-if="scope.row.cs_status == 1"
+              >完成任务</el-button
+            >
           </template>
         </el-table-column>
       </el-table>
@@ -56,6 +75,16 @@
         @current-change="handleCurrentChange"
       />
     </div>
+
+    <el-dialog v-model="centerDialogVisible" title="Warning" width="30%" center>
+      <span> 你确定要跳转到详情页面吗? </span>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="centerDialogVisible = false">取消</el-button>
+          <el-button type="primary" @click="toDetail()"> 确定</el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 <script setup>
@@ -72,6 +101,10 @@ const err = inject('$err')
 const usePostData = inject('$usePostData')
 const useDeleteData = inject('$useDeleteData')
 
+//动态更新当前选择的页面的id
+const taskId = ref()
+//弹出确认框
+const centerDialogVisible = ref(false)
 //年级数据
 const grades = ref()
 //班级数据
@@ -93,6 +126,16 @@ onMounted(async () => {
   await render()
 })
 
+//点击跳转详情页面
+const toDetail = () => {
+  centerDialogVisible.value = false
+  router.push({
+    name: 'DetailContent',
+    params: {
+      id: taskId.value
+    }
+  })
+}
 //渲染
 const render = async (params = {}) => {
   try {
@@ -117,9 +160,9 @@ const render = async (params = {}) => {
   }
 }
 //发布任务
-const toCheckStatus = async(id,status) => {
+const toCheckStatus = async (id, status) => {
   try {
-    const res = await usePostData('http://localhost:3000/course/updateStatus',{
+    const res = await usePostData('http://localhost:3000/course/updateStatus', {
       cs_status: status,
       cs_id: id
     })
@@ -170,7 +213,10 @@ const toSearch = () => {
   }
   success('查询成功')
 }
-
+const changeId = (id) => {
+  centerDialogVisible.value = true
+  taskId.value=id
+}
 //编辑
 const toEdit = (id) => {
   router.push({
@@ -183,14 +229,14 @@ const toEdit = (id) => {
 //添加
 const toAdd = () => {
   router.push({
-    name: 'selectPage',
+    name: 'selectPage'
   })
 }
 //删除
 const toDelete = async (id) => {
   try {
     const res = await useDeleteData('http://localhost:3000/course/delete', { cs_id: id })
-    console.log(res);
+    console.log(res)
     render()
     success('删除成功')
   } catch (error) {

@@ -165,9 +165,7 @@ const toEdit = async () => {
     editData.value.g_id = stue.value.g_id
     const res = await usePostData('http://localhost:3000/student/edit', editData.value)
     if (res.data.status) {
-      router.push({
-        name: 'Student'
-      })
+      router.go(-1)
     }
   } catch (error) {
     console.log(error)
@@ -175,9 +173,7 @@ const toEdit = async () => {
 }
 //取消
 const toReset = () => {
-  router.push({
-    name: 'Student'
-  })
+  router.go(-1)
 }
 </script>
 <style module lang="scss">

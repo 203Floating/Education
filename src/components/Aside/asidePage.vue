@@ -44,31 +44,42 @@
             >兴趣课程</el-menu-item
           >
           <el-menu-item index="2-2" route="/course/page" :class="$style.nav">兴趣选课</el-menu-item>
-          <el-menu-item index="2-3" route="/course/DetailSelect" :class="$style.nav"
-            >兴趣选课</el-menu-item
-          >
         </el-sub-menu>
-        <el-sub-menu index="3" v-if="level == '1'">
-          <template #title>
-            <el-icon :class="$style.nav"><Reading /></el-icon>
-            <span>教师管理</span>
-          </template>
-          <el-menu-item index="3-1" route="/teacherManage" :class="$style.nav"
-            >班级管理</el-menu-item
-          >
-          <el-menu-item index="3-2" route="/course" :class="$style.nav">兴趣选课</el-menu-item>
-        </el-sub-menu>
-        <el-menu-item index="4" route="/studentEdit" v-if="level == '0'">
-          <el-icon :class="$style.nav"><icon-menu /></el-icon>
+        <el-menu-item index="2-6" route="/course/table" v-if="level == '2'">
+          <el-icon :class="$style.nav"><DataBoard /></el-icon>
+          <span>课程表</span>
+        </el-menu-item>
+
+
+
+
+
+        <!-- 教师用户管理界面 -->
+        <el-menu-item index="3" route="/teacherEdit"  v-if="level == '1'">
+          <el-icon :class="$style.nav"><UserFilled /></el-icon>
           <span>个人信息编辑</span>
         </el-menu-item>
+        <el-menu-item index="3-1" route="/teacherManage" v-if="level == '1'">
+          <el-icon :class="$style.nav"><DataBoard /></el-icon>
+          <span>班级课表信息</span>
+        </el-menu-item>
+        <el-menu-item index="3-2" route="/studentManage"   v-if="level == '1'">
+          <el-icon :class="$style.nav"><Edit /></el-icon>
+          <span>学生信息维护</span>
+        </el-menu-item>
+
+
         <!-- 学生用户界面 -->
-        <el-menu-item index="5" route="/selectCourse" v-if="level == '0'">
-          <el-icon :class="$style.nav"><icon-menu /></el-icon>
+        <el-menu-item index="4" route="/studentEdit"  v-if="level == '0'">
+          <el-icon :class="$style.nav"><UserFilled /></el-icon>
+          <span>个人信息编辑</span>
+        </el-menu-item>
+        <el-menu-item index="4-1" route="/selectCourse" v-if="level == '0'">
+          <el-icon :class="$style.nav"><Collection /></el-icon>
           <span>兴趣课程选择</span>
         </el-menu-item>
-        <el-menu-item index="6" route="/timeTable" v-if="level == '0'">
-          <el-icon :class="$style.nav"><icon-menu /></el-icon>
+        <el-menu-item index="4-2" route="/timeTable" v-if="level == '0'">
+          <el-icon :class="$style.nav"><DataBoard /></el-icon>
           <span>课程表</span>
         </el-menu-item>
       </el-menu>
@@ -76,7 +87,7 @@
   </el-row>
 </template>
 <script setup>
-import { Menu as IconMenu, Memo, Reading } from '@element-plus/icons-vue'
+import { Menu as IconMenu, Memo, Reading,UserFilled ,Collection,DataBoard,Edit} from '@element-plus/icons-vue'
 import { useAuthorization } from '@/stores/Authorization'
 const { getAuthority } = useAuthorization()
 const { level } = getAuthority()
