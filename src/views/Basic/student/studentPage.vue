@@ -124,7 +124,7 @@ const handleCurrentChange = (num) => {
 }
 //查询
 const toSearch = () => {
-  if (searchipt.value == '') {
+  if (searchipt.value == ''&& stue.value.g_id=='') {
     render()
   }
   const obj = {

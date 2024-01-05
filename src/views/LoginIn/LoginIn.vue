@@ -70,9 +70,9 @@ const tologin = async () => {
         if (tag.level == '2') {
           router.push({ name: 'home' })
         } else if (tag.level == '0') {
-          router.push({ name: 'timeTable' })
+          router.push({ name: 'studentEdit' })
         } else if (tag.level == '1') {
-          router.push({name: 'teacherManage'})
+          router.push({  name: 'teacherEdit'})
         }
       }
     } catch (err) {

@@ -25,7 +25,7 @@
       ><el-col :span="8">{{ taskData.sub_names }}</el-col>
     </el-row>
     <el-row :class="$style.row">
-      <el-col :class="$style.left" :span="3">选课说明：</el-col><el-col :span="8"></el-col>
+      <el-col :class="$style.left" :span="3">选课说明：</el-col><el-col :span="8">暂无</el-col>
     </el-row>
     <el-row :class="$style.row">
       <el-col :class="$style.left" :span="3">互斥课程：</el-col><el-col :span="8">{{mutualCourse}}</el-col>
@@ -46,7 +46,10 @@ import { useRoute } from 'vue-router';
 const usePostData = inject('$usePostData')
 const useGetData = inject('$useGetData')
 //保存选课任务的数据
-const taskData = ref({})
+const taskData = ref({
+  cs_name: '',
+
+})
 const gradeData = ref([])
 const classData = ref([])
 const courseData = ref([])
@@ -66,7 +69,6 @@ onMounted(async () => {
   await getMutual()
   await getConnect()
   await getBan ()
-  console.log(courseData.value)
   await getTask()
 })
 //获得任务详情数据
@@ -74,10 +76,15 @@ const getTask = async () => {
   try {
     const res = await usePostData('http://localhost:3000/course', { cs_id: taskId })
     taskData.value = res.data[0]
-    taskData.value.g_name = gradeData.value.find((g) => g.g_id === res.data[0].g_id).g_name
-    taskData.value.c_names = await changeClass(taskData.value.c_ids, classData)
-    taskData.value.sub_names = await changeCourse(taskData.value.sub_ids, courseData)
-    console.log(taskData.value, 'taskData')
+    taskData.value = {
+      ...res.data[0],
+      g_name: gradeData.value.find((g) => g.g_id === res.data[0].g_id).g_name,
+      c_names: await changeClass(taskData.value.c_ids, classData),
+      sub_names : await changeCourse(taskData.value.sub_ids, courseData)
+    }
+    // taskData.value.g_name = gradeData.value.find((g) => g.g_id === res.data[0].g_id).g_name
+    // taskData.value.c_names = await changeClass(taskData.value.c_ids, classData)
+    // taskData.value.sub_names = await changeCourse(taskData.value.sub_ids, courseData)
   } catch (error) {
     console.log(error)
   }

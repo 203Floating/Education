@@ -53,7 +53,6 @@
       <div :class="$style.bottom">
         <div :class="$style.btn">
           <button :class="$style.btn1" @click="toSave">保存</button>
-          <button :class="$style.btn2" @click="toReset">清空</button>
         </div>
       </div>
     </div>
@@ -87,7 +86,6 @@ onMounted(async () => {
   await getTask()
   await getCourse()
   console.log(taskData.value, 'task')
-  // if (taskData.value.cs_status != '1') [(courseData.value = '')]
 })
 //选课
 const toSave = async () => {
@@ -164,6 +162,9 @@ const getCourseData = async (data) => {
 }
 //查询是否已经选择该课程
 const searchSelectCourse = async (id) => {
+  if (!userData.value.subs) {
+    return true
+  }
   const subs = userData.value.subs.split(',')
   let tag = true
   subs.forEach((e) => {

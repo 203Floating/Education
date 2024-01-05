@@ -18,12 +18,12 @@
           <el-menu-item index="2-3" :route="`/course/select/set/${id}/forbid/${id}`"
             >禁选组合</el-menu-item
           >
-          <el-menu-item index="2-4" :route="`/course/select/set/${id}/mutual/${id}`"
+          <!-- <el-menu-item index="2-4" :route="`/course/select/set/${id}/mutual/${id}`"
             >选课权限</el-menu-item
           >
           <el-menu-item index="2-5" :route="`/course/select/set/${id}/mutual/${id}`"
             >限选人数</el-menu-item
-          >
+          > -->
         </el-sub-menu>
       </el-menu>
     </div>
@@ -49,7 +49,7 @@ onMounted(() => {
     }
   })
   id.value = route.params.id
-  console.log(id.value,route);
+  console.log(id.value, route)
 })
 watch(
   () => route,

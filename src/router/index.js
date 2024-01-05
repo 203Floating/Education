@@ -201,9 +201,8 @@ const router = createRouter({
               ]
             },
             {
-              path: 'DetailSelect',
+              path: 'DetailSelect/:id',
               name: 'DetailSelect',
-              redirect: '/course/detailSelect/DetailContent',
               component: () => import('../views/course/detail/detailPage.vue'),
               children: [
                 {

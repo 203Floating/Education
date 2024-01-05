@@ -31,23 +31,23 @@
         </el-button>
       </div>
       <el-table :data="tasklist" border :class="$style.table">
-        <el-table-column type="index" label="序号" width="80" />
-        <el-table-column label="选课任务名" width="180">
+        <el-table-column type="index" label="序号" width="100" />
+        <el-table-column label="选课任务名" width="200">
           <template #default="scope">
             <el-button link @click="changeId(scope.row.cs_id)">{{ scope.row.cs_name }}</el-button>
           </template>
         </el-table-column>
-        <el-table-column label="选课对象" width="200">
+        <el-table-column label="选课对象" width="280">
           <template #default="scope">
             <el-button link @click="changeId(scope.row.cs_id)">{{ scope.row.cs_class }}</el-button>
           </template>
         </el-table-column>
         <el-table-column prop="cs_grade" label="选课年级" width="100" />
-        <el-table-column prop="cs_max" label="MAX" width="100" />
-        <el-table-column prop="cs_min" label="MIN" width="100" />
+        <el-table-column prop="cs_max" label="MAX" />
+        <el-table-column prop="cs_min" label="MIN"  />
         <el-table-column prop="cs_statusName" label="状态" width="120" />
         <el-table-column prop="cs_Date" label="选课日期" width="120" />
-        <el-table-column label="操作">
+        <el-table-column label="操作" width="200">
           <template #default="scope">
             <el-button link @click="toEdit(scope.row.cs_id)">编辑</el-button>
             <el-button link @click="toDelete(scope.row.cs_id)">删除</el-button>
@@ -130,8 +130,8 @@ onMounted(async () => {
 const toDetail = () => {
   centerDialogVisible.value = false
   router.push({
-    name: 'DetailContent',
-    params: {
+    name: 'DetailSelect',
+ params: {
       id: taskId.value
     }
   })
@@ -206,6 +206,7 @@ const handleCurrentChange = (num) => {
 }
 //查询
 const toSearch = () => {
+  console.log(searchipt.value,'scopedSlots');
   if (searchipt.value.cs_status == '' && searchipt.value.cs_name == '') {
     render()
   } else {

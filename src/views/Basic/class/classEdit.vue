@@ -6,25 +6,38 @@
         <el-row :class="$style.row">
           <el-col :span="2" :class="$style.title" v-if="isID"> 班级ID：</el-col
           ><el-col :span="5" v-if="isID"
-            ><el-input type="text" :class="$style.ipt1" v-model="editData.c_id"  />
+            ><el-input type="text" :class="$style.ipt1" v-model="editData.c_id" />
           </el-col>
-
+          <el-col :span="1"></el-col>
           <el-col :span="2" :class="$style.title"> 班级名：</el-col
           ><el-col :span="5"
             ><el-input type="text" :class="$style.ipt1" v-model="editData.c_name" />
           </el-col>
-
+          <el-col :span="1"></el-col>
           <el-col :span="2" :class="$style.title">年级：</el-col>
           <el-col :span="5"> <gradesIpt :stue="stue" /></el-col>
         </el-row>
 
         <el-row :class="$style.row">
-          <el-col :span="2" :class="$style.title"> 班级类型：</el-col
-          ><el-col :span="5">
-            <el-select :class="$style.ipt1" v-model="editData.c_type">
+          <el-col :span="2" :class="$style.title"> 班级类型：</el-col>
+          <el-col :span="5">
+            <el-select :class="$style.ipt1" v-model="editData.c_type" placeholder="班级类型">
               <el-option value="0" label="普通班" key="0" />
               <el-option value="1" label="重点班" key="1" />
               <el-option value="2" label="火箭班" key="2" />
+            </el-select>
+          </el-col>
+          <el-col :span="1"></el-col>
+          <el-col :span="2" :class="$style.title"> 课程方案：</el-col>
+          <el-col :span="5">
+            <el-select
+              :class="$style.ipt1"
+              v-model="editData.timetable_id"
+              placeholder="选课可方案（第一天）"
+            >
+              <el-option value="1" label="语文，数学，外语" key="1" />
+              <el-option value="2" label="外语，语文，数学" key="2" />
+              <el-option value="3" label="数学，外语，语文" key="3" />
             </el-select>
           </el-col>
         </el-row>
@@ -36,7 +49,7 @@
         <el-row :class="$style.row">
           <el-col :span="2" :class="$style.title"> 语文老师：</el-col
           ><el-col :span="5">
-            <el-select :class="$style.ipt1" v-model="teachers.chinese">
+            <el-select :class="$style.ipt1" v-model="teachers.chinese" placeholder="姓名">
               <el-option
                 v-for="item in chinese"
                 :key="item.t_id"
@@ -49,7 +62,7 @@
         <el-row :class="$style.row">
           <el-col :span="2" :class="$style.title"> 数学老师：</el-col
           ><el-col :span="5">
-            <el-select :class="$style.ipt1" v-model="teachers.math">
+            <el-select :class="$style.ipt1" v-model="teachers.math" placeholder="姓名">
               <el-option
                 v-for="item in math"
                 :key="item.t_id"
@@ -62,7 +75,7 @@
         <el-row :class="$style.row">
           <el-col :span="2" :class="$style.title"> 外语老师：</el-col
           ><el-col :span="5">
-            <el-select :class="$style.ipt1" v-model="teachers.English">
+            <el-select :class="$style.ipt1" v-model="teachers.English" placeholder="姓名">
               <el-option
                 v-for="item in English"
                 :key="item.t_id"
@@ -75,7 +88,7 @@
         <el-row :class="$style.row">
           <el-col :span="2" :class="$style.title"> 班主任：</el-col>
           <el-col :span="5"
-            ><el-select :class="$style.ipt1" v-model="editData.c_headmaster">
+            ><el-select :class="$style.ipt1" v-model="editData.c_headmaster" placeholder="班主任">
               <el-option
                 :label="item.name"
                 v-for="item in header"
@@ -169,12 +182,12 @@ onMounted(async () => {
   chinese.value = await fetchTeachers(1)
   English.value = await fetchTeachers(2)
   math.value = await fetchTeachers(3)
-  if (route.params.id!=-1) {
+  if (route.params.id != -1) {
     await usePostData('http://localhost:3000/class', {
       c_id: route.params.id
     }).then((res) => {
       editData.value = res.data.data[0]
-      isID.value=false
+      isID.value = false
     })
   } else {
     isID.value = true
@@ -183,13 +196,13 @@ onMounted(async () => {
 //确认
 const toEdit = async () => {
   try {
-    const str  =  teachers.value.English + ',' + teachers.value.chinese + ',' + teachers.value.math
-    editData.value.t_id =str
-editData.value.g_id=stue.value.g_id
+    const str = teachers.value.English + ',' + teachers.value.chinese + ',' + teachers.value.math
+    editData.value.t_id = str
+    editData.value.g_id = stue.value.g_id
     const res = await usePostData('http://localhost:3000/class/edit', editData.value)
     if (res.data.status) {
       router.push({
-        name: 'Class',
+        name: 'Class'
       })
     }
   } catch (error) {
@@ -199,7 +212,7 @@ editData.value.g_id=stue.value.g_id
 //取消
 const toReset = () => {
   router.push({
-    name: 'Class',
+    name: 'Class'
   })
 }
 </script>

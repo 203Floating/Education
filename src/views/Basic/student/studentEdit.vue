@@ -7,7 +7,7 @@
           <el-col :span="2" :class="$style.title"> 姓名：</el-col
           ><el-col :span="5"
             ><el-input type="text" :class="$style.ipt1" v-model="editData.stu_name" />
-          </el-col>
+          </el-col><el-col :span="1"></el-col>
           <el-col :span="2" :class="$style.title"> 性别：</el-col
           ><el-col :span="5">
             <el-select v-model="editData.stu_sex" placeholder="性别" :class="$style.ipt1">
@@ -20,7 +20,7 @@
           <el-col :span="2" :class="$style.title"> 民族：</el-col
           ><el-col :span="5"
             ><el-input type="text" :class="$style.ipt1" v-model="editData.stu_M"
-          /></el-col>
+          /></el-col><el-col :span="1"></el-col>
           <el-col :span="2" :class="$style.title"> 生日：</el-col
           ><el-col :span="5">
             <el-date-picker
@@ -32,10 +32,10 @@
         </el-row>
 
         <el-row :class="$style.row">
-          <el-col :span="2" :class="$style.title">紧急联系人：</el-col>
+          <el-col :span="2" :class="$style.title">紧急联系：</el-col>
           <el-col :span="5">
             <el-input v-model="editData.stu_linkman" :class="$style.ipt1" />
-          </el-col>
+          </el-col><el-col :span="1"></el-col>
           <el-col :span="2" :class="$style.title"> 手机号：</el-col
           ><el-col :span="5"
             ><el-input type="text" :class="$style.ipt1" v-model="editData.stu_phone"
@@ -50,7 +50,7 @@
               <el-option label="军官证" value="军官证" key="3" />
               <el-option label="其它" value="其它" key="4" />
             </el-select>
-          </el-col>
+          </el-col><el-col :span="1"></el-col>
           <el-col :span="2" :class="$style.title"> 证件号：</el-col
           ><el-col :span="5"
             ><el-input type="text" :class="$style.ipt1" v-model="editData.stu_IDnumber"
@@ -59,7 +59,7 @@
 
         <el-row :class="$style.row">
           <el-col :span="2" :class="$style.title">通信地址：</el-col>
-          <linkAge :address="address" />
+          <linkAge :address="address" /><el-col :span="1"></el-col>
           <el-col :span="2" :class="$style.title"> 详细地址：</el-col
           ><el-col :span="5"
             ><el-input type="text" :class="$style.ipt1" v-model="detail_address"
@@ -71,8 +71,6 @@
       <div :class="$style.header">额外信息</div>
       <div :class="$style.main">
         <el-row :class="$style.row">
-          <el-col :span="2" :class="$style.title"> 学校：</el-col
-          ><el-col :span="5"><el-input type="text" :class="$style.ipt1" /></el-col>
           <el-col :span="2" :class="$style.title"> 学号：</el-col
           ><el-col :span="5"
             ><el-input type="text" :class="$style.ipt1" v-model="editData.stu_id" />
@@ -84,7 +82,7 @@
           ><el-col :span="5">
             <gradesIpt :stue="stue" />
           </el-col>
-
+          <el-col :span="1"></el-col>
           <el-col :span="2" :class="$style.title"> 班级：</el-col>
           <el-col :span="5">
             <classIpt :stue="stue" />

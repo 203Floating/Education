@@ -8,6 +8,7 @@
           ><el-col :span="5"
             ><el-input type="text" :class="$style.ipt1" v-model="editData.t_name" />
           </el-col>
+          <el-col :span="1"></el-col>
           <el-col :span="2" :class="$style.title"> 性别：</el-col
           ><el-col :span="5">
             <el-select v-model="editData.t_sex" placeholder="性别" :class="$style.ipt1">
@@ -20,11 +21,11 @@
           <el-col :span="2" :class="$style.title"> 工号：</el-col
           ><el-col :span="5"
             ><el-input type="text" :class="$style.ipt1" v-model="editData.t_id" />
-          </el-col>
+          </el-col><el-col :span="1"></el-col>
           <el-col :span="2" :class="$style.title"> 联系方式：</el-col
           ><el-col :span="5"
             ><el-input type="text" :class="$style.ipt1" v-model="editData.t_phone"
-          /></el-col>
+          /></el-col><el-col :span="1"></el-col>
           <el-col :span="2" :class="$style.title"> 邮箱：</el-col
           ><el-col :span="5"
             ><el-input type="text" :class="$style.ipt1" v-model="editData.t_email"
@@ -34,7 +35,7 @@
           <el-col :span="2" :class="$style.title"> 民族：</el-col
           ><el-col :span="5"
             ><el-input type="text" :class="$style.ipt1" v-model="editData.t_m"
-          /></el-col>
+          /></el-col><el-col :span="1"></el-col>
           <el-col :span="2" :class="$style.title"> 生日：</el-col
           ><el-col :span="5">
             <el-date-picker
@@ -42,7 +43,7 @@
               v-model="editData.t_bornDate"
               type="dates"
               placeholder="请选择你的生日"
-          /></el-col>
+          /></el-col><el-col :span="1"></el-col>
           <el-col :span="2" :class="$style.title"> 任职状态：</el-col
           ><el-col :span="5">
             <el-select :class="$style.ipt1" v-model="editData.t_status" placeholder="任职状态">
@@ -54,7 +55,7 @@
         </el-row>
         <el-row :class="$style.row">
           <el-col :span="2" :class="$style.title">通信地址：</el-col>
-          <linkAge :address="address" />
+          <linkAge :address="address" /><el-col :span="1"></el-col>
           <el-col :span="2" :class="$style.title"> 详细地址：</el-col
           ><el-col :span="5"
             ><el-input type="text" :class="$style.ipt1" v-model="detail_address"
@@ -69,7 +70,7 @@
               <el-option label="军官证" value="军官证" key="3" />
               <el-option label="其它" value="其它" key="4" />
             </el-select>
-          </el-col>
+          </el-col><el-col :span="1"></el-col>
           <el-col :span="2" :class="$style.title"> 证件号：</el-col
           ><el-col :span="5"
             ><el-input type="text" :class="$style.ipt1" v-model="editData.t_IDnumber"
@@ -90,7 +91,7 @@
           ><el-col :span="5">
             <courseIpt :subject="subject"></courseIpt>
           </el-col>
-
+          <el-col :span="1"></el-col>
           <el-col :span="2" :class="$style.title"> 年级：</el-col
           ><el-col :span="5">
             <el-select :class="$style.ipt1" placeholder="年级" v-model="editData.g_id">
@@ -149,7 +150,7 @@ onMounted(async () => {
   const res = await fetchCourses()
   course.value.data1 = res.data1
   course.value.data2 = res.data2
-  if (route.params.id!=-1) {
+  if (route.params.id != -1) {
     await usePostData('http://localhost:3000/teacher', {
       t_id: route.params.id,
       t_name: route.params.name,
@@ -164,7 +165,7 @@ const toEdit = async () => {
   try {
     editData.value.t_address =
       address.value.province + address.value.city + address.value.county + detail_address.value
-      editData.value.sub_id=subject.value.id
+    editData.value.sub_id = subject.value.id
     const res = await usePostData('http://localhost:3000/teacher/edit', editData.value)
     if (res.data.status) {
       router.go(-1)
