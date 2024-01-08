@@ -228,17 +228,16 @@ const getClassTaskStudent = (id1, id2, data) => {
 
       th,
       td {
-        // border: 1px solid #ddd;
+        border: 1px solid #ddd;
         height: 50px;
       }
       th{
         font-weight: normal;
         width:40%;
-        background-color: #daedff;
       }
       td{
         width: 20%;
-        background-color: #e9f3ff;
+        // background-color: #e9f3ff;
       }
     }
   }

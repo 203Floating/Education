@@ -71,8 +71,6 @@
       <div :class="$style.header">额外信息</div>
       <div :class="$style.main">
         <el-row :class="$style.row">
-          <el-col :span="2" :class="$style.title"> 学校：</el-col
-          ><el-col :span="5"><el-input type="text" :class="$style.ipt1" /></el-col>
           <el-col :span="2" :class="$style.title"> 学号：</el-col
           ><el-col :span="5"
             ><el-input type="text" :class="$style.ipt1" v-model="editData.stu_id" />
@@ -84,7 +82,9 @@
           ><el-col :span="5">
             <gradesIpt :stue="stue" />
           </el-col>
+        </el-row>
 
+        <el-row :class="$style.row">
           <el-col :span="2" :class="$style.title"> 班级：</el-col>
           <el-col :span="5">
             <classIpt :stue="stue" />

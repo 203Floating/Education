@@ -41,6 +41,12 @@
         border
         :class="$style.table"
         @selection-change="handleSelectionChange"
+        :cell-style="{ textAlign: 'center', 'line-height': '40px', 'font-weight': '500' }"
+        :header-cell-style="{
+          'text-align': 'center',
+          height: '50px',
+          color: '#282e38'
+        }"
       >
         <el-table-column type="selection" />
         <el-table-column type="index" label="全选" width="100" />

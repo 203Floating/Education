@@ -27,17 +27,20 @@ watch(
   () => stue,
   async (newValue) => {
     emit('update:stue', { ...newValue })
-
     try {
       const res = await usePostData('http://localhost:3000/class', {
         g_id: stue.g_id
       })
-      classes.value = res.data.data
+      if (stue.g_id != '') {
+        classes.value = res.data.data
+      } else {
+        classes.value = []
+      }
     } catch (error) {
       console.log(error)
     }
   },
-  { deep: true } // 添加 deep 选项
+  { deep: true, immediate: true } // 添加 deep 选项
 )
 </script>
 

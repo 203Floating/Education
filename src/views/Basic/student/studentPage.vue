@@ -32,7 +32,17 @@
           ><el-icon size="15"><FolderAdd /></el-icon>
         </el-button>
       </div>
-      <el-table :data="students" border :class="$style.table">
+      <el-table
+        :data="students"
+        border
+        :class="$style.table"
+        :cell-style="{ textAlign: 'center', 'line-height': '40px', 'font-weight': '500' }"
+        :header-cell-style="{
+          'text-align': 'center',
+          height: '50px',
+          color: '#282e38'
+        }"
+      >
         <el-table-column prop="stu_name" label="姓名" />
         <el-table-column prop="stu_id" label="学号" />
         <el-table-column prop="stu_sex" label="性别" />
@@ -124,7 +134,7 @@ const handleCurrentChange = (num) => {
 }
 //查询
 const toSearch = () => {
-  if (searchipt.value == ''&& stue.value.g_id=='') {
+  if (searchipt.value == '' && stue.value.g_id == '') {
     render()
   }
   const obj = {
@@ -141,11 +151,10 @@ const toReset = () => {
     stu_name: '',
     stu_id: ''
   }
-  stue.value = {
-    c_id: '',
-    g_id: '',
-    size: true
-  }
+  stue.value.c_id = ''
+  stue.value.g_id = ''
+  stue.value.size = true
+
   render()
 }
 //删除

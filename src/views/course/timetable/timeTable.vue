@@ -223,16 +223,16 @@ const getCourse = async () => {
         box-sizing: border-box;
         padding: 10px;
         height: 80px;
-        border: 1px solid #ddd;
+        border: 1px solid #baccd9;
         text-align: center;
-        background-color: #f4f9ff;
+        // background-color: #f4f9ff;
       }
       th {
-        background-color: #daedff;
+        // background-color: #daedff;
       }
       .time {
         width: 10%;
-        background-color: #e9f3ff;
+        // background-color: #e9f3ff;
       }
     }
   }

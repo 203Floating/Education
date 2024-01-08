@@ -82,7 +82,8 @@
           ><el-col :span="5">
             <gradesIpt :stue="stue" />
           </el-col>
-          <el-col :span="1"></el-col>
+        </el-row>
+        <el-row :class="$style.row">
           <el-col :span="2" :class="$style.title"> 班级：</el-col>
           <el-col :span="5">
             <classIpt :stue="stue" />

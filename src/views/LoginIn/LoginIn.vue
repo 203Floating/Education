@@ -72,7 +72,7 @@ const tologin = async () => {
         } else if (tag.level == '0') {
           router.push({ name: 'studentEdit' })
         } else if (tag.level == '1') {
-          router.push({  name: 'teacherEdit'})
+          router.push({ name: 'teacherEdit' })
         }
       }
     } catch (err) {
@@ -82,11 +82,19 @@ const tologin = async () => {
 }
 </script>
 <style module lang="scss">
+.box {
+  background-image: url('../../assets/image/bgc.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  // background-size: 100% 100%;
+}
 .container {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translateX(-50%) translateY(-50%);
+
   .verify_form {
     height: 100%;
 
@@ -100,7 +108,8 @@ const tologin = async () => {
       margin-bottom: 30px;
       button {
         border: none;
-        background-color: $btn_bgc;
+        // background-color: $btn_bgc;
+        background-color: rgba(256,256,256,0);
         font-size: 16px;
       }
     }
@@ -119,8 +128,7 @@ const tologin = async () => {
       justify-content: space-between;
       button {
         border: none;
-        background-color: #fff;
-        color: #aaaaaa;
+        background-color:rgba(256,256,256,0);
         font-size: 16px;
       }
     }

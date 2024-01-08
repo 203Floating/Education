@@ -157,14 +157,9 @@ const getUserData = async () => {
     height: 80px;
     border: 1px solid #ddd;
     text-align: center;
-    background-color: #f4f9ff;
-  }
-  th {
-    background-color: #daedff;
   }
   .time {
     width: 10%;
-    background-color: #e9f3ff;
   }
 }
 </style>

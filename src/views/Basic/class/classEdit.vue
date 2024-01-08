@@ -8,7 +8,7 @@
           ><el-col :span="5" v-if="isID"
             ><el-input type="text" :class="$style.ipt1" v-model="editData.c_id" />
           </el-col>
-          <el-col :span="1"></el-col>
+          <el-col :span="1" v-if="isID"></el-col>
           <el-col :span="2" :class="$style.title"> 班级名：</el-col
           ><el-col :span="5"
             ><el-input type="text" :class="$style.ipt1" v-model="editData.c_name" />
@@ -88,7 +88,7 @@
         <el-row :class="$style.row">
           <el-col :span="2" :class="$style.title"> 班主任：</el-col>
           <el-col :span="5"
-            ><el-select :class="$style.ipt1" v-model="editData.c_headmaster" placeholder="班主任">
+            ><el-select :class="$style.ipt1" v-model="editData.c_headmaster" placeholder="姓名">
               <el-option
                 :label="item.name"
                 v-for="item in header"

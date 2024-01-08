@@ -16,7 +16,12 @@
           ><el-icon size="15"><FolderAdd /></el-icon>
         </el-button>
       </div>
-      <el-table :data="studentData" border :class="$style.table">
+      <el-table :data="studentData" border :class="$style.table"         :cell-style="{ textAlign: 'center', 'line-height': '40px', 'font-weight': '500' }"
+        :header-cell-style="{
+          'text-align': 'center',
+          height: '50px',
+          color: '#282e38'
+        }">
         <el-table-column prop="stu_name" label="姓名" />
         <el-table-column prop="stu_id" label="学号" />
         <el-table-column prop="stu_sex" label="性别" />

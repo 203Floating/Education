@@ -22,8 +22,18 @@
           ><el-icon size="15"><FolderAdd /></el-icon>
         </el-button>
       </div>
-      <el-table :data="classes" border :class="$style.table">
-        <el-table-column prop="c_name" label="班级名称" />
+      <el-table
+        :data="classes"
+        border
+        :class="$style.table"
+        :cell-style="{ textAlign: 'center', 'line-height': '40px', 'font-weight': '500' }"
+        :header-cell-style="{
+          'text-align': 'center',
+          height: '50px',
+          color: '#282e38'
+        }"
+      >
+        <el-table-column prop="c_name" label="班级名称" alig />
         <el-table-column prop="g_name" label="年级" />
         <el-table-column prop="c_headmaster_name" label="班主任" />
         <el-table-column prop="c_type_name" label="班级类型" />
@@ -122,11 +132,9 @@ const toSearch = () => {
 }
 //重置
 const toReset = () => {
-  stue.value = {
-    g_id: '',
-    c_id: '',
-    size: true
-  }
+  stue.value.c_id = ''
+  stue.value.g_id = ''
+  stue.value.size = true
   render()
 }
 //删除

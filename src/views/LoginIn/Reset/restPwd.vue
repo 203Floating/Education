@@ -137,7 +137,7 @@ $pheight: 50px;
       flex-wrap: nowrap;
       span {
         width: 100px;
-        line-height: $ipt-height;
+        line-height:  $pheight;
       }
     }
     .title {

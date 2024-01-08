@@ -31,7 +31,17 @@
           ><el-icon size="15"><FolderAdd /></el-icon>
         </el-button>
       </div>
-      <el-table :data="teachers" border :class="$style.table">
+      <el-table
+        :data="teachers"
+        border
+        :class="$style.table"
+        :cell-style="{ textAlign: 'center', 'line-height': '40px', 'font-weight': '500' }"
+        :header-cell-style="{
+          'text-align': 'center',
+          height: '50px',
+          color: '#282e38'
+        }"
+      >
         <el-table-column prop="t_name" label="姓名" />
         <el-table-column prop="t_sex" label="性别" />
         <el-table-column prop="sub_name" label="科目" />
@@ -117,7 +127,7 @@ const render = async (params = []) => {
       }
     })
     if (res.data.length != 0) {
-      page.value.total=res.data[0].total
+      page.value.total = res.data[0].total
     }
   })
 }

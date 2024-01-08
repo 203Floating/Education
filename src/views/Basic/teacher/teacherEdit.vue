@@ -20,13 +20,11 @@
         <el-row :class="$style.row">
           <el-col :span="2" :class="$style.title"> 工号：</el-col
           ><el-col :span="5"
-            ><el-input type="text" :class="$style.ipt1" v-model="editData.t_id" />
-          </el-col><el-col :span="1"></el-col>
-          <el-col :span="2" :class="$style.title"> 联系方式：</el-col
+            ><el-input type="text" :class="$style.ipt1" v-model="editData.t_id" /> </el-col
+          ><el-col :span="1"></el-col> <el-col :span="2" :class="$style.title"> 联系方式：</el-col
           ><el-col :span="5"
-            ><el-input type="text" :class="$style.ipt1" v-model="editData.t_phone"
-          /></el-col><el-col :span="1"></el-col>
-          <el-col :span="2" :class="$style.title"> 邮箱：</el-col
+            ><el-input type="text" :class="$style.ipt1" v-model="editData.t_phone" /></el-col
+          ><el-col :span="1"></el-col> <el-col :span="2" :class="$style.title"> 邮箱：</el-col
           ><el-col :span="5"
             ><el-input type="text" :class="$style.ipt1" v-model="editData.t_email"
           /></el-col>
@@ -34,17 +32,15 @@
         <el-row :class="$style.row">
           <el-col :span="2" :class="$style.title"> 民族：</el-col
           ><el-col :span="5"
-            ><el-input type="text" :class="$style.ipt1" v-model="editData.t_m"
-          /></el-col><el-col :span="1"></el-col>
-          <el-col :span="2" :class="$style.title"> 生日：</el-col
+            ><el-input type="text" :class="$style.ipt1" v-model="editData.t_m" /></el-col
+          ><el-col :span="1"></el-col> <el-col :span="2" :class="$style.title"> 生日：</el-col
           ><el-col :span="5">
             <el-date-picker
               :class="$style.ipt1"
               v-model="editData.t_bornDate"
               type="dates"
-              placeholder="请选择你的生日"
-          /></el-col><el-col :span="1"></el-col>
-          <el-col :span="2" :class="$style.title"> 任职状态：</el-col
+              placeholder="请选择你的生日" /></el-col
+          ><el-col :span="1"></el-col> <el-col :span="2" :class="$style.title"> 任职状态：</el-col
           ><el-col :span="5">
             <el-select :class="$style.ipt1" v-model="editData.t_status" placeholder="任职状态">
               <el-option value="0" label="在职" key="0" />
@@ -69,9 +65,8 @@
               <el-option label="护照" value="护照" key="2" />
               <el-option label="军官证" value="军官证" key="3" />
               <el-option label="其它" value="其它" key="4" />
-            </el-select>
-          </el-col><el-col :span="1"></el-col>
-          <el-col :span="2" :class="$style.title"> 证件号：</el-col
+            </el-select> </el-col
+          ><el-col :span="1"></el-col> <el-col :span="2" :class="$style.title"> 证件号：</el-col
           ><el-col :span="5"
             ><el-input type="text" :class="$style.ipt1" v-model="editData.t_IDnumber"
           /></el-col>
@@ -82,15 +77,11 @@
       <div :class="$style.header">教学信息</div>
       <div :class="$style.main">
         <el-row :class="$style.row">
-          <el-col :span="2" :class="$style.title"> 任职学校：</el-col
-          ><el-col :span="5"><el-input type="text" :class="$style.ipt1" /></el-col>
-        </el-row>
-
-        <el-row :class="$style.row">
           <el-col :span="2" :class="$style.title"> 课程：</el-col
           ><el-col :span="5">
             <courseIpt :subject="subject"></courseIpt>
           </el-col>
+
           <el-col :span="1"></el-col>
           <el-col :span="2" :class="$style.title"> 年级：</el-col
           ><el-col :span="5">
@@ -142,7 +133,9 @@ const address = ref({
   county: '',
   detail: ''
 })
-const subject = ref({})
+const subject = ref({
+  size:true
+})
 
 const detail_address = ref()
 onMounted(async () => {

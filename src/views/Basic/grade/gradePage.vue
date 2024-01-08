@@ -54,6 +54,12 @@
     <!-- 弹出框 -->
     <el-dialog v-model="dialogTableVisible" title="设置年级主任">
       <el-table
+        :cell-style="{ textAlign: 'center', 'line-height': '40px', 'font-weight': '500' }"
+        :header-cell-style="{
+          'text-align': 'center',
+          height: '50px',
+          color: '#282e38'
+        }"
         ref="singleTableRef"
         :data="teachers"
         highlight-current-row

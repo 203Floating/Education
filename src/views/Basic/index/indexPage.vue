@@ -349,20 +349,22 @@ const getCourse = (data) => {
 //获得兴趣课程人数
 const getInterestData = async (students, data) => {
   for (let i = 0; i < students.value.length; i++) {
-    const s = students.value[i].subs.split(',')
-    if (s.length > 1) {
-      for (let j = 0; j < s.length; j++) {
-        for (let m = 0; m < data.value.data.length; m++) {
-          if (data.value.data[m].sub_id == s[j]) {
-            data.value.data[m].value++
+    if (students.value[i].subs) {
+      const s = students.value[i].subs.split(',')
+      if (s.length > 1) {
+        for (let j = 0; j < s.length; j++) {
+          for (let m = 0; m < data.value.data.length; m++) {
+            if (data.value.data[m].sub_id == s[j]) {
+              data.value.data[m].value++
+            }
           }
         }
       }
-    }
-    if (s.length == 1) {
-      for (let m = 0; m < data.value.data.length; m++) {
-        if (data.value.data[m].sub_id == s[0]) {
-          data.value.data[m].value++
+      if (s.length == 1) {
+        for (let m = 0; m < data.value.data.length; m++) {
+          if (data.value.data[m].sub_id == s[0]) {
+            data.value.data[m].value++
+          }
         }
       }
     }

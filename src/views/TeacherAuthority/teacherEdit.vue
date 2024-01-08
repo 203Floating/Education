@@ -80,11 +80,6 @@
     <div :class="$style.extra">
       <div :class="$style.header">教学信息</div>
       <div :class="$style.main">
-        <!-- <el-row :class="$style.row">
-          <el-col :span="2" :class="$style.title"> 任职学校：</el-col
-          ><el-col :span="5"><el-input type="text" :class="$style.ipt1" /></el-col>
-        </el-row> -->
-
         <el-row :class="$style.row">
           <el-col :span="2" :class="$style.title"> 课程：</el-col
           ><el-col :span="5">
@@ -142,7 +137,9 @@ const address = ref({
   county: '',
   detail: ''
 })
-const subject = ref({})
+const subject = ref({
+  size:true
+})
 
 const detail_address = ref()
 onMounted(async () => {
