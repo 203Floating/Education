@@ -86,8 +86,12 @@
             <courseIpt :subject="subject"></courseIpt>
           </el-col>
 
+
+        </el-row>
+        <el-row  :class="$style.row">
           <el-col :span="2" :class="$style.title"> 年级：</el-col
-          ><el-col :span="5">
+          >
+          <el-col :span="5">
             <el-select :class="$style.ipt1" placeholder="年级" v-model="editData.g_id">
               <el-option
                 v-for="item in grades"
